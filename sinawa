@@ -1,0 +1,2355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sinau Aksara Jawa - Pak Satryo, S.Pd</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Javanese:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #e2f4f2;
+      background-image: radial-gradient(#b2e0dc 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+      color: #362419;
+    }
+    .font-jawa {
+      font-family: 'Noto Sans Javanese', 'Segoe UI Historic', serif;
+    }
+    .font-game {
+      font-family: 'Fredoka', 'Plus Jakarta Sans', sans-serif;
+    }
+    .bg-batik {
+      background-color: #2a1b12;
+      background-image: radial-gradient(#d4a359 0.75px, transparent 0.75px), radial-gradient(#d4a359 0.75px, #2a1b12 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+    }
+    .wood-card {
+      background: #ffffff;
+      border: 3.5px solid #7c4013;
+      box-shadow: 0 8px 0px #522707, 0 15px 25px rgba(82, 39, 7, 0.15);
+      border-radius: 20px;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .card-interactive {
+      cursor: pointer;
+    }
+    .card-interactive:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 14px 0px #522707, 0 20px 30px rgba(82, 39, 7, 0.25);
+      border-color: #b45309;
+    }
+    .card-interactive:hover .char-img {
+      transform: scale(1.08) rotate(2deg);
+    }
+    .card-interactive:hover .btn-card-action {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+    .btn-jawa {
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+      border: 2px solid #78350f;
+      box-shadow: 0 4px 0px #78350f;
+      transition: all 0.15s ease;
+    }
+    .btn-jawa:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 7px 0px #78350f;
+      filter: brightness(1.1);
+    }
+    .btn-jawa:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0px #78350f;
+    }
+    .btn-green {
+      background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+      border: 2px solid #065f46;
+      box-shadow: 0 4px 0px #065f46;
+      transition: all 0.15s ease;
+    }
+    .btn-green:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 7px 0px #065f46;
+      filter: brightness(1.1);
+    }
+    .btn-green:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0px #065f46;
+    }
+    .btn-blue {
+      background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+      border: 2px solid #1e3a8a;
+      box-shadow: 0 4px 0px #1e3a8a;
+      transition: all 0.15s ease;
+    }
+    .btn-blue:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 7px 0px #1e3a8a;
+      filter: brightness(1.1);
+    }
+    .wood-banner {
+      background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
+      border: 3px solid #451a03;
+      box-shadow: 0 6px 0px #2a0e02;
+    }
+    canvas {
+      touch-action: none;
+    }
+    @keyframes floatSlow {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .animate-float {
+      animation: floatSlow 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-200">
+
+  <!-- HEADER -->
+  <header class="bg-batik text-amber-100 shadow-lg border-b-4 border-amber-600 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center space-x-3 cursor-pointer group" onclick="playAudioPop(); showScreen('menu-screen')">
+        <div class="w-10 h-10 rounded-full bg-amber-600 flex items-center justify-center font-jawa font-bold text-2xl text-amber-100 border-2 border-amber-300 shadow group-hover:scale-110 transition">
+          ꦲ
+        </div>
+        <div>
+          <h1 class="font-extrabold text-lg sm:text-xl tracking-wide text-amber-200 leading-tight">Sinau Aksara Jawa</h1>
+          <p class="text-xs text-amber-400 font-medium">SMPN 15 Kota Malang</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <button id="music-toggle-btn" onclick="toggleBackgroundMusic()" class="px-3 py-1.5 bg-amber-900/90 hover:bg-amber-800 text-amber-200 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 border border-amber-600 shadow transition active:scale-95">
+          <i id="music-icon" class="fa-solid fa-volume-xmark text-stone-400"></i>
+          <span id="music-text">Musik Off</span>
+        </button>
+
+        <button id="nav-back-btn" onclick="playAudioPop(); goBackScreen()" class="hidden px-2.5 py-1.5 bg-amber-900/90 hover:bg-amber-800 text-amber-200 rounded-xl text-xs font-semibold items-center gap-1 border border-amber-600 transition active:scale-95" title="Mundur / Kembali">
+          <i class="fa-solid fa-chevron-left"></i>
+          <span class="hidden sm:inline">Mundur</span>
+        </button>
+
+        <button id="nav-home-btn" onclick="playAudioPop(); showScreen('menu-screen')" class="hidden px-3 py-1.5 bg-amber-900/90 hover:bg-amber-800 text-amber-200 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 border border-amber-600 transition active:scale-95">
+          <i class="fa-solid fa-house"></i>
+          <span class="hidden sm:inline">Menu Utama</span>
+        </button>
+
+        <button id="nav-next-btn" onclick="playAudioPop(); goNextScreen()" class="hidden px-2.5 py-1.5 bg-amber-900/90 hover:bg-amber-800 text-amber-200 rounded-xl text-xs font-semibold items-center gap-1 border border-amber-600 transition active:scale-95" title="Lanjut / Maju">
+          <span class="hidden sm:inline">Lanjut</span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="flex-grow max-w-7xl w-full mx-auto p-3 sm:p-6 flex flex-col justify-center">
+
+    <!-- MENU UTAMA / WELCOME -->
+    <section id="menu-screen" class="space-y-8 my-auto">
+      <div class="text-center space-y-4 max-w-2xl mx-auto">
+        <div class="inline-block px-4 py-1.5 rounded-full bg-amber-100 text-amber-900 border-2 border-amber-400 font-bold text-xs sm:text-sm shadow-sm mb-2 animate-bounce">
+          <i class="fa-solid fa-graduation-cap text-amber-700 mr-1.5"></i> Media Pembelajaran Interaktif Bahasa Jawa
+        </div>
+        <h2 class="text-4xl sm:text-6xl font-black text-amber-950 tracking-tight drop-shadow-sm">
+          Sinau Aksara Jawa
+        </h2>
+        <p class="font-jawa text-3xl sm:text-4xl text-amber-800 tracking-wider">
+          ꦱꦶꦤꦲꦸꦲꦏ꧀ꦱꦫꦗꦮ
+        </p>
+        <p class="text-stone-700 text-base sm:text-lg max-w-lg mx-auto font-medium">
+          Sugeng rawuh! Mari belajar dan melestarikan Aksara Jawa melalui materi lengkap & 5 permainan interaktif Mode Single & Duel 2 Pemain.
+        </p>
+
+        <!-- CREATOR CREDIT BOX -->
+        <div class="wood-card p-4 rounded-2xl max-w-md mx-auto flex items-center gap-4 text-left border-l-8 border-l-amber-700 mt-6 hover:scale-105 transition">
+          <div class="w-12 h-12 rounded-2xl bg-amber-200 flex items-center justify-center text-amber-900 text-2xl font-bold shrink-0 border-2 border-amber-500 shadow">
+            <i class="fa-solid fa-chalkboard-user"></i>
+          </div>
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-700 block">Dibuat Oleh:</span>
+            <h3 class="font-black text-amber-950 text-base sm:text-lg">Satryo, S.Pd</h3>
+            <p class="text-xs text-stone-600 font-semibold">Guru Bahasa Jawa - SMPN 15 Kota Malang</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center pt-2">
+        <button onclick="playAudioPop(); startAppWithMusic()" class="btn-jawa text-white font-black text-xl sm:text-2xl px-12 py-4 rounded-2xl shadow-xl flex items-center gap-3 mx-auto">
+          <span>WIWITI</span>
+          <i class="fa-solid fa-circle-play text-2xl"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- SELECT SCREEN (MODE SELECTION) -->
+    <section id="select-screen" class="hidden space-y-6">
+      
+      <div class="text-center relative max-w-xs mx-auto">
+        <div class="wood-banner text-amber-100 font-game font-black text-2xl sm:text-3xl py-2.5 px-8 rounded-2xl inline-flex items-center justify-center gap-2 tracking-widest uppercase shadow-lg">
+          <i class="fa-solid fa-leaf text-emerald-400 text-lg"></i>
+          <span>MENU UTAMA</span>
+          <i class="fa-solid fa-leaf text-emerald-400 text-lg"></i>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 max-w-7xl mx-auto pt-2">
+        
+        <!-- CARD 1: SINAU AKSARA -->
+        <div onclick="playAudioPop(); openSinauModule()" class="wood-card card-interactive p-5 flex flex-col justify-between items-center text-center group">
+          <div class="w-full flex justify-center py-2 relative">
+            <svg class="w-32 h-36 char-img transition-transform duration-300" viewBox="0 0 160 180" fill="none">
+              <path d="M40 70 C40 30, 120 30, 120 70 C120 75, 40 75, 40 70 Z" fill="#522707"/>
+              <ellipse cx="80" cy="45" rx="42" ry="25" fill="#6d3509"/>
+              <circle cx="120" cy="65" r="10" fill="#421d04"/>
+              <ellipse cx="80" cy="80" rx="35" ry="32" fill="#ffd8b3"/>
+              <circle cx="68" cy="78" r="4" fill="#2d1810"/>
+              <circle cx="92" cy="78" r="4" fill="#2d1810"/>
+              <path d="M73 90 Q80 97 87 90" stroke="#8b4513" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <circle cx="62" cy="84" r="5" fill="#ffb3b3" opacity="0.6"/>
+              <circle cx="98" cy="84" r="5" fill="#ffb3b3" opacity="0.6"/>
+              <path d="M50 110 L110 110 L125 170 L35 170 Z" fill="#8b5a2b"/>
+              <rect x="58" y="125" width="44" height="35" rx="4" fill="#1d4ed8" stroke="#ffffff" stroke-width="2"/>
+              <path d="M80 125 L80 160" stroke="#ffffff" stroke-width="1.5"/>
+              <text x="65" y="148" font-family="'Noto Sans Javanese'" font-size="16" fill="#ffffff" font-weight="bold">ꦲ</text>
+            </svg>
+          </div>
+
+          <div class="space-y-2 my-2">
+            <h3 class="font-game font-black text-lg text-amber-950 uppercase tracking-wide">1. SINAU AKSARA</h3>
+            <p class="text-xs text-stone-600 font-semibold px-1">Pengenalan, Carakan, Pasangan, Sandhangan & Ukara.</p>
+          </div>
+
+          <div class="w-full pt-3">
+            <button class="btn-jawa btn-card-action w-full py-2.5 rounded-xl font-game font-extrabold text-white text-sm uppercase tracking-wider">
+              BUKAK MATERI
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD 2: MAOS AKSARA -->
+        <div class="wood-card card-interactive p-5 flex flex-col justify-between items-center text-center group" onclick="playAudioPop(); triggerMaosFromCard()">
+          <div class="w-full flex justify-center py-2">
+            <svg class="w-32 h-36 char-img transition-transform duration-300" viewBox="0 0 160 180" fill="none">
+              <ellipse cx="80" cy="45" rx="42" ry="25" fill="#6d3509"/>
+              <path d="M40 70 C40 30, 120 30, 120 70 C120 75, 40 75, 40 70 Z" fill="#522707"/>
+              <circle cx="120" cy="65" r="10" fill="#421d04"/>
+              <ellipse cx="80" cy="80" rx="35" ry="32" fill="#ffd8b3"/>
+              <path d="M63 76 Q68 70 73 76" stroke="#2d1810" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <path d="M87 76 Q92 70 97 76" stroke="#2d1810" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <path d="M72 88 Q80 97 88 88" stroke="#8b4513" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <path d="M50 110 L110 110 L125 170 L35 170 Z" fill="#8b5a2b"/>
+              <path d="M50 120 Q80 125 80 155 Q50 150 50 120 Z" fill="#2563eb" stroke="#ffffff"/>
+              <path d="M110 120 Q80 125 80 155 Q110 150 110 120 Z" fill="#3b82f6" stroke="#ffffff"/>
+              <text x="58" y="142" font-family="'Noto Sans Javanese'" font-size="14" fill="#ffffff">ꦩ</text>
+            </svg>
+          </div>
+
+          <div class="space-y-2 my-2 w-full">
+            <h3 class="font-game font-black text-lg text-amber-950 uppercase tracking-wide">2. MAOS AKSARA</h3>
+            <p class="text-xs text-stone-600 font-semibold px-1">Kuis pilihan ganda maca aksara Jawa.</p>
+            
+            <div class="pt-1" onclick="event.stopPropagation()">
+              <select id="maos-level-select-input" class="w-full bg-amber-50 border-2 border-amber-800 text-amber-950 text-xs font-extrabold rounded-lg p-1.5 focus:outline-none cursor-pointer text-center">
+                <option value="gampang">Level: GAMPANG</option>
+                <option value="sedengan">Level: SEDENGAN</option>
+                <option value="angel">Level: ANGEL</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="w-full pt-2 flex gap-1.5" onclick="event.stopPropagation()">
+            <button onclick="playAudioPop(); startMaosQuizDirect('1P')" class="btn-green btn-card-action flex-1 py-2 rounded-xl font-game font-bold text-white text-xs uppercase tracking-wider">
+              1 Pemain
+            </button>
+            <button onclick="playAudioPop(); startMaosQuizDirect('2P')" class="btn-blue btn-card-action flex-1 py-2 rounded-xl font-game font-bold text-white text-xs uppercase tracking-wider">
+              2P ⚔️
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD 3: TANGKAP AKSARA -->
+        <div class="wood-card card-interactive p-5 flex flex-col justify-between items-center text-center group" onclick="playAudioPop(); triggerTangkapFromCard()">
+          <div class="w-full flex justify-center py-2">
+            <svg class="w-32 h-36 char-img transition-transform duration-300" viewBox="0 0 160 180" fill="none">
+              <ellipse cx="80" cy="45" rx="42" ry="25" fill="#6d3509"/>
+              <path d="M40 70 C40 30, 120 30, 120 70 C120 75, 40 75, 40 70 Z" fill="#522707"/>
+              <circle cx="120" cy="65" r="10" fill="#421d04"/>
+              <ellipse cx="80" cy="80" rx="35" ry="32" fill="#ffd8b3"/>
+              <circle cx="68" cy="76" r="5" fill="#2d1810"/>
+              <circle cx="92" cy="76" r="5" fill="#2d1810"/>
+              <path d="M70 88 Q80 100 90 88 Z" fill="#8b4513"/>
+              <path d="M50 110 L110 110 L125 170 L35 170 Z" fill="#8b5a2b"/>
+              <path d="M50 135 L110 135 L102 165 L58 165 Z" fill="#d97706" stroke="#78350f" stroke-width="2"/>
+            </svg>
+          </div>
+
+          <div class="space-y-2 my-2 w-full">
+            <h3 class="font-game font-black text-lg text-amber-950 uppercase tracking-wide">3. TANGKAP AKSARA</h3>
+            <p class="text-xs text-stone-600 font-semibold px-1">Tangkap aksara sing bener gogrog!</p>
+
+            <div class="pt-1" onclick="event.stopPropagation()">
+              <select id="tangkap-speed-select" class="w-full bg-amber-50 border-2 border-amber-800 text-amber-950 text-xs font-extrabold rounded-lg p-1.5 focus:outline-none cursor-pointer text-center">
+                <option value="alon">Kecepatan: ALON</option>
+                <option value="sedengan">Kecepatan: SEDENGAN</option>
+                <option value="banter">Kecepatan: BANTER</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="w-full pt-2 flex gap-1.5" onclick="event.stopPropagation()">
+            <button onclick="playAudioPop(); startTangkapDirect('1P')" class="btn-green btn-card-action flex-1 py-2 rounded-xl font-game font-bold text-white text-xs uppercase tracking-wider">
+              1 Pemain
+            </button>
+            <button onclick="playAudioPop(); startTangkapDirect('2P')" class="btn-blue btn-card-action flex-1 py-2 rounded-xl font-game font-bold text-white text-xs uppercase tracking-wider">
+              2P ⚔️
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD 4: NYUSUN AKSARA -->
+        <div class="wood-card card-interactive p-5 flex flex-col justify-between items-center text-center group" onclick="playAudioPop(); triggerNyusunFromCard()">
+          <div class="w-full flex justify-center py-2 relative">
+            <svg class="w-32 h-36 char-img transition-transform duration-300" viewBox="0 0 160 180" fill="none">
+              <ellipse cx="80" cy="45" rx="42" ry="25" fill="#6d3509"/>
+              <path d="M40 70 C40 30, 120 30, 120 70 C120 75, 40 75, 40 70 Z" fill="#522707"/>
+              <circle cx="120" cy="65" r="10" fill="#421d04"/>
+              <ellipse cx="80" cy="80" rx="35" ry="32" fill="#ffd8b3"/>
+              <path d="M72 88 Q80 95 88 88" stroke="#8b4513" stroke-width="3" stroke-linecap="round" fill="none"/>
+              <path d="M50 110 L110 110 L125 170 L35 170 Z" fill="#8b5a2b"/>
+              <g font-family="'Noto Sans Javanese'" font-size="16" font-weight="bold" fill="#d97706">
+                <text x="25" y="60" class="animate-bounce">ꦏ</text>
+                <text x="125" y="55" class="animate-bounce" style="animation-delay: 0.2s">ꦭ</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="space-y-2 my-2 w-full">
+            <h3 class="font-game font-black text-lg text-amber-950 uppercase tracking-wide">4. NYUSUN AKSARA</h3>
+            <p class="text-xs text-stone-600 font-semibold px-1">Arranged cards menyang kothak sing bener.</p>
+
+            <div class="pt-1" onclick="event.stopPropagation()">
+              <select id="nyusun-level-select" class="w-full bg-amber-50 border-2 border-amber-800 text-amber-950 text-xs font-extrabold rounded-lg p-1.5 focus:outline-none cursor-pointer text-center">
+                <option value="gampang">Level: GAMPANG</option>
+                <option value="sedengan">Level: SEDENGAN</option>
+                <option value="angel">Level: ANGEL</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="w-full pt-2 flex gap-1.5" onclick="event.stopPropagation()">
+            <button onclick="playAudioPop(); startNyusunDirect('1P')" class="btn-green btn-card-action flex-1 py-2 rounded-xl font-game font-bold text-white text-xs uppercase tracking-wider">
+              1 Pemain
+            </button>
+            <button onclick="playAudioPop(); startNyusunDirect('2P')" class="btn-blue btn-card-action flex-1 py-2 rounded-xl font-game font-bold text-white text-xs uppercase tracking-wider">
+              2P ⚔️
+            </button>
+          </div>
+        </div>
+
+        <!-- CARD 5: PECAH GELEMBUNG (BUBBLE POP AKSARA) -->
+        <div class="wood-card card-interactive p-5 flex flex-col justify-between items-center text-center group border-amber-500 bg-amber-50/50" onclick="playAudioPop(); triggerGelembungFromCard()">
+          <div class="w-full flex justify-center py-2 relative">
+            <svg class="w-32 h-36 char-img transition-transform duration-300" viewBox="0 0 160 180" fill="none">
+              <!-- Animated background bubbles in SVG -->
+              <circle cx="40" cy="50" r="18" fill="#3b82f6" opacity="0.3" class="animate-bounce"/>
+              <circle cx="120" cy="40" r="22" fill="#10b981" opacity="0.3" class="animate-pulse"/>
+              <circle cx="80" cy="130" r="25" fill="#f59e0b" opacity="0.3"/>
+              
+              <!-- Character popping bubble -->
+              <ellipse cx="80" cy="85" rx="35" ry="32" fill="#ffd8b3"/>
+              <circle cx="68" cy="80" r="4" fill="#2d1810"/>
+              <circle cx="92" cy="80" r="4" fill="#2d1810"/>
+              <path d="M72 92 Q80 102 88 92" stroke="#8b4513" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <path d="M50 115 L110 115 L125 170 L35 170 Z" fill="#8b5a2b"/>
+
+              <!-- Main Bubble Icon with Aksara -->
+              <circle cx="80" cy="48" r="26" fill="url(#bubbleGrad)" stroke="#ffffff" stroke-width="3" opacity="0.9"/>
+              <text x="68" y="56" font-family="'Noto Sans Javanese'" font-size="22" fill="#ffffff" font-weight="bold">ꦏ</text>
+              <circle cx="70" cy="36" r="6" fill="#ffffff" opacity="0.6"/>
+
+              <defs>
+                <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#38bdf8"/>
+                  <stop offset="100%" stop-color="#0284c7"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          <div class="space-y-2 my-2 w-full">
+            <div class="inline-block bg-amber-500 text-white font-black text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">Game Anyar 🎈</div>
+            <h3 class="font-game font-black text-lg text-amber-950 uppercase tracking-wide leading-tight">5. PECAH GELEMBUNG</h3>
+            <p class="text-xs text-stone-600 font-semibold px-1">Pecahke gelembung aksara sing bener!</p>
+
+            <div class="pt-1" onclick="event.stopPropagation()">
+              <select id="gelembung-speed-select" class="w-full bg-amber-50 border-2 border-amber-800 text-amber-950 text-xs font-extrabold rounded-lg p-1.5 focus:outline-none cursor-pointer text-center">
+                <option value="alon">Kecepatan: ALON</option>
+                <option value="sedengan" selected>Kecepatan: SEDENGAN</option>
+                <option value="banter">Kecepatan: BANTER</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="w-full pt-2 flex gap-1.5" onclick="event.stopPropagation()">
+            <button onclick="playAudioPop(); startGelembungDirect('1P')" class="btn-green btn-card-action flex-1 py-2 rounded-xl font-game font-bold text-white text-xs uppercase tracking-wider">
+              1 Pemain
+            </button>
+            <button onclick="playAudioPop(); startGelembungDirect('2P')" class="btn-blue btn-card-action flex-1 py-2 rounded-xl font-game font-bold text-white text-xs uppercase tracking-wider">
+              2P ⚔️
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 1: SINAU AKSARA (MATERI LENGKAP) -->
+    <section id="sinau-screen" class="hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b pb-4 border-amber-300">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-amber-950">1. Sinau Aksara Jawa Lengkap</h2>
+          <p class="text-stone-700 text-sm font-medium">Pengenalan, Huruf Carakan (20) & Pasangan, Sandhangan, lan Ukara.</p>
+        </div>
+        <div class="flex flex-wrap bg-amber-200/80 p-1.5 rounded-2xl shrink-0 border border-amber-400 gap-1">
+          <button onclick="playAudioPop(); switchSinauTab('pengenalan')" id="tab-pengenalan" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold text-amber-950 hover:bg-amber-300/60 transition">Pengenalan</button>
+          <button onclick="playAudioPop(); switchSinauTab('carakan')" id="tab-carakan" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-700 text-white shadow-sm transition">Carakan & Pasangan</button>
+          <button onclick="playAudioPop(); switchSinauTab('sandhangan')" id="tab-sandhangan" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold text-amber-950 hover:bg-amber-300/60 transition">Sandhangan</button>
+          <button onclick="playAudioPop(); switchSinauTab('ukara')" id="tab-ukara" class="px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold text-amber-950 hover:bg-amber-300/60 transition">Contoh Ukara</button>
+        </div>
+      </div>
+
+      <!-- TAB 1: PENGENALAN HURUF AKSARA JAWA -->
+      <div id="sinau-tab-pengenalan" class="hidden space-y-6">
+        <div class="wood-card p-6 space-y-4">
+          <div class="flex items-center gap-3 border-b border-amber-200 pb-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-700 text-white font-bold text-2xl flex items-center justify-center font-jawa">ꦲꦤ</div>
+            <div>
+              <h3 class="text-xl font-black text-amber-950">Sejarah lan Asal-Usul Aksara Jawa</h3>
+              <p class="text-xs text-amber-800 font-bold">Aksara Hanacaraka / Dentawyanjana</p>
+            </div>
+          </div>
+
+          <p class="text-stone-700 text-sm leading-relaxed">
+            Aksara Jawa (uga dikenal minangka <strong>Hanacaraka</strong> utawa <strong>Dentawyanjana</strong>) yaiku aksara tradisional Nusantara sing digunakake kanggo nulis basa Jawa. Aksara iki nduweni sejarah kang luhur lan dikaitake karo legenda Prabu Aji Saka lan para abadhipun, yaiku <strong>Dora</strong> lan <strong>Sembada</strong>.
+          </p>
+
+          <div class="bg-amber-50 p-4 rounded-2xl border-2 border-amber-300 space-y-2">
+            <h4 class="font-bold text-amber-950 text-sm uppercase tracking-wider flex items-center gap-2">
+              <i class="fa-solid fa-scroll text-amber-700"></i> Filosofi & Makna Susunan Hanacaraka:
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-stone-800 pt-1 font-medium">
+              <div class="p-2.5 bg-white rounded-xl border border-amber-200 shadow-sm">
+                <span class="font-extrabold text-amber-900 block">ꦲ ꦤ ꦕ ꦫ ꦏ (Ha Na Ca Ra Ka)</span>
+                <em>"Ana utusan"</em> — Ada utusan / duta kepercayaan.
+              </div>
+              <div class="p-2.5 bg-white rounded-xl border border-amber-200 shadow-sm">
+                <span class="font-extrabold text-amber-900 block">ꦢ ꦠ ꦱ ꦮ ꦭ (Da Ta Sa Wa La)</span>
+                <em>"Padha pasulayan"</em> — Saling berselisih / mempertahankan amanat.
+              </div>
+              <div class="p-2.5 bg-white rounded-xl border border-amber-200 shadow-sm">
+                <span class="font-extrabold text-amber-900 block">ꦥ ꦝ ꦗ ꦪ ꦚ (Pa Dha Ja Ya Nya)</span>
+                <em>"Padha dene kesaktiane"</em> — Sama-sama memiliki kesaktian.
+              </div>
+              <div class="p-2.5 bg-white rounded-xl border border-amber-200 shadow-sm">
+                <span class="font-extrabold text-amber-900 block">ꦩ ꦒ ꦧ ꦛ ꦔ (Ma Ga Ba Tha Nga)</span>
+                <em>"Padha dadi bathang"</em> — Sama-sama gugur menjadi mayat karena setia.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+            <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-300 space-y-1">
+              <span class="font-extrabold text-emerald-950 text-sm block">1. Aksara Carakan (Nglegena)</span>
+              <p class="text-xs text-stone-600">Jumlah 20 aksara utama sing durung oleh sandhangan, berbunyi vokal 'a' / 'o'.</p>
+            </div>
+            <div class="p-4 bg-indigo-50 rounded-2xl border border-indigo-300 space-y-1">
+              <span class="font-extrabold text-indigo-950 text-sm block">2. Pasangan Aksara</span>
+              <p class="text-xs text-stone-600">Bentuk khusus aksara sing digunakake kanggo mateni bunyi vokal aksara sadurunge.</p>
+            </div>
+            <div class="p-4 bg-amber-50 rounded-2xl border border-amber-300 space-y-1">
+              <span class="font-extrabold text-amber-950 text-sm block">3. Sandhangan</span>
+              <p class="text-xs text-stone-600">Tanda diakritik kanggo ngowahi vokal (i, u, e, o) utawa nambah konsonan pungkasan (r, ng, h, paten).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: CARAKAN & PASANGAN -->
+      <div id="sinau-tab-carakan" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4"></div>
+
+      <!-- TAB 3: SANDHANGAN LENGKAP -->
+      <div id="sinau-tab-sandhangan" class="hidden space-y-6">
+        <div>
+          <h3 class="font-extrabold text-amber-950 text-lg mb-3">A. Sandhangan Swara (Pengubah Vokal)</h3>
+          <div id="sandhangan-swara-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+        </div>
+
+        <div>
+          <h3 class="font-extrabold text-amber-950 text-lg mb-3">B. Sandhangan Panyigeg Wanda (Mateni Konsonan)</h3>
+          <div id="sandhangan-panyigeg-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"></div>
+        </div>
+
+        <div>
+          <h3 class="font-extrabold text-amber-950 text-lg mb-3">C. Sandhangan Wyanjana (Sisipan Konsonan)</h3>
+          <div id="sandhangan-wyanjana-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+        </div>
+      </div>
+
+      <!-- TAB 4: CONTOH UKARA -->
+      <div id="sinau-tab-ukara" class="hidden space-y-4"></div>
+    </section>
+
+    <!-- SECTION 2: MAOS AKSARA (1P & 2P SPLIT SCREEN) -->
+    <section id="maos-screen" class="hidden space-y-6 max-w-5xl mx-auto w-full">
+      <div id="maos-quiz-view" class="hidden wood-card p-6 sm:p-8 space-y-6 max-w-2xl mx-auto">
+        <div class="flex justify-between items-center text-sm font-bold text-amber-950 border-b border-amber-200 pb-3">
+          <span id="maos-level-tag" class="px-3 py-1 bg-amber-200 rounded-full text-xs uppercase tracking-wider font-extrabold border border-amber-400">Level: Gampang</span>
+          <div class="font-black text-base">Skor: <span id="maos-score" class="text-amber-700 text-xl">0</span></div>
+          <div class="font-black text-base">Soal: <span id="maos-progress" class="text-amber-800">1/5</span></div>
+        </div>
+
+        <div class="text-center py-6 bg-amber-50 rounded-2xl border-2 border-amber-300">
+          <p class="text-xs text-stone-500 uppercase tracking-widest font-bold mb-2">Waca Aksara Jawa Iki:</p>
+          <div id="maos-question-display" class="font-jawa text-6xl sm:text-7xl font-bold text-amber-950 my-2">ꦲ</div>
+        </div>
+
+        <div id="maos-options-container" class="grid grid-cols-2 gap-3"></div>
+        <div id="maos-feedback" class="hidden p-3 text-center rounded-xl font-bold text-sm"></div>
+      </div>
+
+      <!-- 2P SPLIT SCREEN QUIZ VIEW -->
+      <div id="maos-2p-view" class="hidden space-y-4">
+        <div class="bg-amber-950 text-amber-100 p-3 rounded-2xl border-2 border-amber-500 shadow-md flex justify-between items-center text-center">
+          <div class="flex items-center gap-2">
+            <span class="bg-indigo-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase">MODE DUAL 2 PEMAIN</span>
+            <span id="maos-2p-level-tag" class="text-xs font-bold text-amber-300">Level: Gampang</span>
+          </div>
+          <div class="font-black text-xl text-amber-300 bg-amber-900/80 px-4 py-1 rounded-xl border border-amber-600">
+            ⏳ Waktu: <span id="maos-2p-timer" class="text-rose-400">45</span>s
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="wood-card p-5 border-l-8 border-l-indigo-600 space-y-4 relative">
+            <div class="flex justify-between items-center border-b pb-2 border-amber-200">
+              <span class="font-black text-indigo-700 text-base">👤 PEMAIN 1 (Kiwa)</span>
+              <span class="font-black text-lg text-amber-950">Skor: <span id="maos-p1-score" class="text-indigo-600">0</span></span>
+            </div>
+            <div class="text-center py-4 bg-amber-50 rounded-xl border border-amber-300">
+              <div id="maos-p1-q" class="font-jawa text-5xl font-bold text-amber-950">ꦲ</div>
+            </div>
+            <div id="maos-p1-opts" class="grid grid-cols-2 gap-2"></div>
+            <div id="maos-p1-msg" class="text-xs text-center font-bold min-h-[20px]"></div>
+          </div>
+
+          <div class="wood-card p-5 border-l-8 border-l-emerald-600 space-y-4 relative">
+            <div class="flex justify-between items-center border-b pb-2 border-amber-200">
+              <span class="font-black text-emerald-700 text-base">👤 PEMAIN 2 (Tengen)</span>
+              <span class="font-black text-lg text-amber-950">Skor: <span id="maos-p2-score" class="text-emerald-600">0</span></span>
+            </div>
+            <div class="text-center py-4 bg-amber-50 rounded-xl border border-amber-300">
+              <div id="maos-p2-q" class="font-jawa text-5xl font-bold text-amber-950">ꦲ</div>
+            </div>
+            <div id="maos-p2-opts" class="grid grid-cols-2 gap-2"></div>
+            <div id="maos-p2-msg" class="text-xs text-center font-bold min-h-[20px]"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Results View -->
+      <div id="maos-result-view" class="hidden wood-card p-8 text-center space-y-6 max-w-xl mx-auto">
+        <div class="w-20 h-20 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center text-4xl mx-auto border-4 border-amber-400 shadow-inner">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <div>
+          <h3 id="maos-result-title" class="text-3xl font-black text-amber-950">Hasil Maos Aksara</h3>
+          <p id="maos-result-sub" class="text-stone-600 text-sm mt-1 font-semibold">Pak Satryo bangga kalih usaha sampeyan!</p>
+        </div>
+        <div id="maos-result-body" class="bg-amber-50 p-4 rounded-2xl max-w-xs mx-auto border-2 border-amber-300">
+          <span class="text-xs text-stone-500 uppercase font-bold tracking-wider">Skor Akhir</span>
+          <div id="maos-final-score" class="text-5xl font-black text-amber-800 my-1">100</div>
+        </div>
+        <div class="flex justify-center gap-3">
+          <button onclick="playAudioPop(); showScreen('select-screen')" class="btn-jawa px-6 py-3 text-white rounded-xl font-extrabold">Menu Utama</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: TANGKAP AKSARA -->
+    <section id="tangkap-screen" class="hidden space-y-4 max-w-5xl mx-auto w-full">
+      <div class="flex justify-between items-center">
+        <div>
+          <h2 id="tangkap-mode-title" class="text-2xl font-black text-amber-950">3. Tangkap Aksara</h2>
+          <p id="tangkap-mode-desc" class="text-xs text-stone-700 font-semibold">Geser keranjang ke kiri/kanan untuk menangkap aksara yang benar!</p>
+        </div>
+        <button onclick="playAudioPop(); initTangkapGame()" class="px-3 py-1.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 shadow transition active:scale-95">
+          <i class="fa-solid fa-rotate-right mr-1"></i> Reset Game
+        </button>
+      </div>
+
+      <div id="tangkap-1p-container" class="space-y-3">
+        <div class="bg-batik p-4 rounded-2xl text-amber-100 flex justify-between items-center text-sm font-extrabold border-2 border-amber-600 shadow-md">
+          <div>Target: <span id="tangkap-target" class="text-amber-300 text-2xl font-black uppercase ml-1">HA</span></div>
+          <div>Skor: <span id="tangkap-score" class="text-emerald-400 text-2xl font-black ml-1">0</span></div>
+          <div>Nyawa: <span id="tangkap-lives" class="text-rose-400 text-2xl font-black ml-1">❤️❤️❤️</span></div>
+        </div>
+
+        <div class="relative w-full aspect-[4/3] max-w-2xl mx-auto bg-stone-900 rounded-2xl overflow-hidden border-4 border-amber-800 shadow-inner">
+          <canvas id="tangkapCanvas" class="w-full h-full block"></canvas>
+          
+          <div class="absolute bottom-3 left-3 right-3 flex justify-between pointer-events-none sm:hidden">
+            <button id="btn-left" class="pointer-events-auto w-14 h-14 rounded-full bg-amber-600/90 text-white text-2xl flex items-center justify-center active:bg-amber-700 shadow-lg border-2 border-amber-300">
+              <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <button id="btn-right" class="pointer-events-auto w-14 h-14 rounded-full bg-amber-600/90 text-white text-2xl flex items-center justify-center active:bg-amber-700 shadow-lg border-2 border-amber-300">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tangkap-2p-container" class="hidden space-y-3">
+        <div class="bg-amber-950 p-3 rounded-2xl text-amber-100 flex justify-between items-center text-sm font-extrabold border-2 border-amber-600">
+          <span class="bg-indigo-600 text-white text-xs px-3 py-1 rounded-full uppercase">MODE DUAL 2 PEMAIN</span>
+          <div class="text-xl text-amber-300 font-black">⏳ Waktu: <span id="tangkap-2p-timer" class="text-rose-400">40</span>s</div>
+          <span class="text-xs text-amber-300">Keyboard: P1 (A/D) | P2 (Panah)</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <div class="bg-indigo-900 p-2.5 rounded-xl text-white text-xs font-bold flex justify-between items-center border border-indigo-500">
+              <span>👤 P1 Target: <strong id="t2p-p1-target" class="text-amber-300 text-base">HA</strong></span>
+              <span>Skor: <strong id="t2p-p1-score" class="text-emerald-300 text-base">0</strong></span>
+              <span><span id="t2p-p1-lives">❤️❤️❤️</span></span>
+            </div>
+            <div class="relative w-full aspect-[4/3] bg-stone-900 rounded-xl overflow-hidden border-2 border-indigo-500">
+              <canvas id="tangkapCanvasP1" class="w-full h-full block"></canvas>
+            </div>
+            <div class="flex justify-between gap-2 md:hidden">
+              <button id="t2p-p1-btn-left" class="flex-1 py-2 bg-indigo-700 text-white text-xs font-bold rounded-lg border border-indigo-300">⬅️ P1 Left (A)</button>
+              <button id="t2p-p1-btn-right" class="flex-1 py-2 bg-indigo-700 text-white text-xs font-bold rounded-lg border border-indigo-300">P1 Right (D) ➡️</button>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="bg-emerald-900 p-2.5 rounded-xl text-white text-xs font-bold flex justify-between items-center border border-emerald-500">
+              <span>👤 P2 Target: <strong id="t2p-p2-target" class="text-amber-300 text-base">HA</strong></span>
+              <span>Skor: <strong id="t2p-p2-score" class="text-emerald-300 text-base">0</strong></span>
+              <span><span id="t2p-p2-lives">❤️❤️❤️</span></span>
+            </div>
+            <div class="relative w-full aspect-[4/3] bg-stone-900 rounded-xl overflow-hidden border-2 border-emerald-500">
+              <canvas id="tangkapCanvasP2" class="w-full h-full block"></canvas>
+            </div>
+            <div class="flex justify-between gap-2 md:hidden">
+              <button id="t2p-p2-btn-left" class="flex-1 py-2 bg-emerald-700 text-white text-xs font-bold rounded-lg border border-emerald-300">⬅️ P2 Left (←)</button>
+              <button id="t2p-p2-btn-right" class="flex-1 py-2 bg-emerald-700 text-white text-xs font-bold rounded-lg border border-emerald-300">P2 Right (→) ➡️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: NYUSUN AKSARA -->
+    <section id="nyusun-screen" class="hidden space-y-6 max-w-5xl mx-auto w-full">
+      <div class="text-center space-y-2">
+        <h2 id="nyusun-mode-title" class="text-2xl sm:text-3xl font-black text-amber-950">4. Nyusun Aksara</h2>
+        <p id="nyusun-mode-desc" class="text-stone-700 text-sm font-medium">Klik kartu Aksara Jawa di bawah untuk menyusun kata Latin berikut!</p>
+      </div>
+
+      <div id="nyusun-game-view" class="wood-card p-6 rounded-3xl space-y-6 max-w-2xl mx-auto">
+        <div class="flex justify-between items-center text-sm font-extrabold text-amber-950 border-b border-amber-200 pb-3">
+          <div>Soal: <span id="nyusun-progress" class="text-amber-800 text-lg">1/10</span></div>
+          <div>Skor: <span id="nyusun-score" class="text-emerald-700 text-xl">0</span></div>
+          <div>Nyawa: <span id="nyusun-lives" class="text-rose-600 text-xl">❤️❤️❤️</span></div>
+        </div>
+
+        <div class="text-center bg-amber-50 p-4 rounded-2xl border-2 border-amber-300">
+          <span class="text-xs font-bold text-amber-800 uppercase tracking-widest">Target Tembung (Kata):</span>
+          <h3 id="nyusun-target-word" class="text-3xl sm:text-4xl font-black text-amber-950 mt-1 uppercase tracking-wider">SEKOLAH</h3>
+        </div>
+
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block text-center">Susunan Aksara Jawa Anda:</span>
+          <div id="nyusun-slots" class="min-h-[85px] p-3 bg-stone-100 rounded-2xl border-2 border-dashed border-stone-300 flex flex-wrap justify-center items-center gap-3"></div>
+        </div>
+
+        <div class="space-y-2">
+          <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block text-center">Pilihan Kartu Aksara:</span>
+          <div id="nyusun-pool" class="flex flex-wrap justify-center gap-3 p-2"></div>
+        </div>
+
+        <div class="flex justify-between items-center pt-2">
+          <button onclick="playAudioPop(); resetNyusunCurrent()" class="px-4 py-2 bg-stone-200 text-stone-800 rounded-xl font-extrabold text-xs sm:text-sm hover:bg-stone-300 transition">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Reset Slot
+          </button>
+          <button onclick="playAudioPop(); checkNyusunAnswer()" class="btn-jawa px-6 py-2.5 text-white rounded-xl font-black text-xs sm:text-sm">
+            Cek Jawaban <i class="fa-solid fa-check ml-1"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="nyusun-2p-view" class="hidden space-y-4">
+        <div class="bg-amber-950 text-amber-100 p-3 rounded-2xl border-2 border-amber-500 shadow-md flex justify-between items-center">
+          <span class="bg-indigo-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase">MODE DUAL 2 PEMAIN</span>
+          <div class="font-black text-xl text-amber-300">⏳ Waktu: <span id="nyusun-2p-timer" class="text-rose-400">60</span>s</div>
+          <span class="text-xs text-amber-300">Siapa cepat menyusun kata dialah pemenangnya!</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="wood-card p-5 border-l-8 border-l-indigo-600 space-y-4">
+            <div class="flex justify-between items-center border-b pb-2 border-amber-200">
+              <span class="font-black text-indigo-700 text-base">👤 PEMAIN 1</span>
+              <span class="font-black text-lg">Skor: <span id="n2p-p1-score" class="text-indigo-600">0</span></span>
+            </div>
+            <div class="bg-amber-50 p-3 rounded-xl border border-amber-300 text-center">
+              <span class="text-xs text-stone-500 uppercase font-bold">Target Kata:</span>
+              <h4 id="n2p-p1-target" class="text-2xl font-black text-amber-950 uppercase">SEKOLAH</h4>
+            </div>
+            <div class="space-y-1">
+              <span class="text-xs font-bold text-stone-500">Hasil Susunan P1:</span>
+              <div id="n2p-p1-slots" class="min-h-[60px] p-2 bg-stone-100 rounded-xl border border-dashed border-stone-300 flex flex-wrap gap-2 justify-center items-center"></div>
+            </div>
+            <div class="space-y-1">
+              <span class="text-xs font-bold text-stone-500">Pilihan Kartu:</span>
+              <div id="n2p-p1-pool" class="flex flex-wrap gap-2 justify-center"></div>
+            </div>
+            <div class="flex gap-2 pt-2">
+              <button onclick="playAudioPop(); resetNyusun2P('p1')" class="px-3 py-1.5 bg-stone-200 text-stone-800 rounded-lg text-xs font-bold">Reset</button>
+              <button onclick="playAudioPop(); checkNyusun2P('p1')" class="btn-green flex-1 py-1.5 text-white font-bold text-xs rounded-lg">Cek Jawaban</button>
+            </div>
+          </div>
+
+          <div class="wood-card p-5 border-l-8 border-l-emerald-600 space-y-4">
+            <div class="flex justify-between items-center border-b pb-2 border-amber-200">
+              <span class="font-black text-emerald-700 text-base">👤 PEMAIN 2</span>
+              <span class="font-black text-lg">Skor: <span id="n2p-p2-score" class="text-emerald-600">0</span></span>
+            </div>
+            <div class="bg-amber-50 p-3 rounded-xl border border-amber-300 text-center">
+              <span class="text-xs text-stone-500 uppercase font-bold">Target Kata:</span>
+              <h4 id="n2p-p2-target" class="text-2xl font-black text-amber-950 uppercase">SEKOLAH</h4>
+            </div>
+            <div class="space-y-1">
+              <span class="text-xs font-bold text-stone-500">Hasil Susunan P2:</span>
+              <div id="n2p-p2-slots" class="min-h-[60px] p-2 bg-stone-100 rounded-xl border border-dashed border-stone-300 flex flex-wrap gap-2 justify-center items-center"></div>
+            </div>
+            <div class="space-y-1">
+              <span class="text-xs font-bold text-stone-500">Pilihan Kartu:</span>
+              <div id="n2p-p2-pool" class="flex flex-wrap gap-2 justify-center"></div>
+            </div>
+            <div class="flex gap-2 pt-2">
+              <button onclick="playAudioPop(); resetNyusun2P('p2')" class="px-3 py-1.5 bg-stone-200 text-stone-800 rounded-lg text-xs font-bold">Reset</button>
+              <button onclick="playAudioPop(); checkNyusun2P('p2')" class="btn-green flex-1 py-1.5 text-white font-bold text-xs rounded-lg">Cek Jawaban</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="nyusun-result-view" class="hidden wood-card p-8 text-center space-y-6 max-w-xl mx-auto">
+        <div class="w-20 h-20 bg-rose-100 text-rose-800 rounded-full flex items-center justify-center text-4xl mx-auto border-4 border-rose-400 shadow-inner">
+          <i class="fa-solid fa-puzzle-piece"></i>
+        </div>
+        <div>
+          <h3 id="nyusun-result-title" class="text-3xl font-black text-amber-950">Hasil Nyusun Aksara</h3>
+          <p id="nyusun-result-sub" class="text-stone-600 text-sm mt-1 font-semibold">Hebat! Terus kembangke kemampuan nyusun aksara!</p>
+        </div>
+        <div id="nyusun-result-body" class="bg-amber-50 p-4 rounded-2xl max-w-xs mx-auto border-2 border-amber-300">
+          <span class="text-xs text-stone-500 uppercase font-bold tracking-wider">Skor Akhir</span>
+          <div id="nyusun-final-score" class="text-5xl font-black text-amber-800 my-1">100</div>
+        </div>
+        <div class="flex justify-center gap-3">
+          <button onclick="playAudioPop(); showScreen('select-screen')" class="btn-jawa px-6 py-3 text-white rounded-xl font-extrabold">Menu Utama</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PECAH GELEMBUNG (BUBBLE POP AKSARA - GAME 5) -->
+    <section id="gelembung-screen" class="hidden space-y-6 max-w-5xl mx-auto w-full">
+      <div class="text-center space-y-2">
+        <h2 id="gelembung-mode-title" class="text-2xl sm:text-3xl font-black text-amber-950">5. Pecah Gelembung (Bubble Pop)</h2>
+        <p id="gelembung-mode-desc" class="text-stone-700 text-sm font-medium">Klik/Ketuk gelembung sing isine aksara bener sadurunge mumbul ilang!</p>
+      </div>
+
+      <!-- 1 PLAYER GAME CONTAINER -->
+      <div id="gelembung-1p-container" class="space-y-4 max-w-3xl mx-auto">
+        <div class="bg-batik p-4 rounded-2xl text-amber-100 flex justify-between items-center text-sm font-extrabold border-2 border-amber-600 shadow-md">
+          <div class="bg-amber-900/80 px-3 py-1 rounded-xl border border-amber-500">
+            Target: <span id="gelembung-target-text" class="text-amber-300 text-2xl font-black uppercase ml-1">KA</span>
+          </div>
+          <div>Skor: <span id="gelembung-score" class="text-emerald-400 text-2xl font-black ml-1">0</span></div>
+          <div>Ronde: <span id="gelembung-round" class="text-amber-300 font-black">1/10</span></div>
+          <div>Nyawa: <span id="gelembung-lives" class="text-rose-400 text-xl font-black ml-1">❤️❤️❤️</span></div>
+        </div>
+
+        <div class="relative w-full h-[450px] bg-gradient-to-b from-sky-400 via-sky-200 to-amber-100 rounded-3xl overflow-hidden border-4 border-amber-800 shadow-xl">
+          <canvas id="gelembungCanvas1P" class="w-full h-full block cursor-pointer"></canvas>
+        </div>
+      </div>
+
+      <!-- 2 PLAYER SPLIT SCREEN CONTAINER -->
+      <div id="gelembung-2p-container" class="hidden space-y-4">
+        <div class="bg-amber-950 p-3 rounded-2xl text-amber-100 flex justify-between items-center text-sm font-extrabold border-2 border-amber-600 shadow-md">
+          <span class="bg-indigo-600 text-white text-xs px-3 py-1 rounded-full uppercase">MODE DUAL 2 PEMAIN</span>
+          <div class="text-xl text-amber-300 font-black">⏳ Waktu: <span id="gelembung-2p-timer" class="text-rose-400">45</span>s</div>
+          <span class="text-xs text-amber-300">Lomba mecah gelembung target ing area masing-masing!</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- P1 BUBBLE CONTAINER -->
+          <div class="space-y-2">
+            <div class="bg-indigo-900 p-3 rounded-2xl text-white text-xs font-bold flex justify-between items-center border border-indigo-500">
+              <span>👤 P1 Target: <strong id="g2p-p1-target" class="text-amber-300 text-xl">KA</strong></span>
+              <span>Skor: <strong id="g2p-p1-score" class="text-emerald-300 text-xl">0</strong></span>
+            </div>
+            <div class="relative w-full h-[400px] bg-gradient-to-b from-indigo-300 via-indigo-100 to-amber-50 rounded-2xl overflow-hidden border-4 border-indigo-600">
+              <canvas id="gelembungCanvasP1" class="w-full h-full block cursor-pointer"></canvas>
+            </div>
+          </div>
+
+          <!-- P2 BUBBLE CONTAINER -->
+          <div class="space-y-2">
+            <div class="bg-emerald-900 p-3 rounded-2xl text-white text-xs font-bold flex justify-between items-center border border-emerald-500">
+              <span>👤 P2 Target: <strong id="g2p-p2-target" class="text-amber-300 text-xl">KA</strong></span>
+              <span>Skor: <strong id="g2p-p2-score" class="text-emerald-300 text-xl">0</strong></span>
+            </div>
+            <div class="relative w-full h-[400px] bg-gradient-to-b from-emerald-300 via-emerald-100 to-amber-50 rounded-2xl overflow-hidden border-4 border-emerald-600">
+              <canvas id="gelembungCanvasP2" class="w-full h-full block cursor-pointer"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-amber-950 text-amber-200/70 py-4 text-center text-xs border-t-4 border-amber-900 mt-8">
+    <div class="max-w-6xl mx-auto px-4 space-y-1">
+      <p class="font-bold text-amber-200">Sinau Aksara Jawa &copy; 2026 - SMPN 15 Kota Malang</p>
+      <p>Karya: <span class="text-amber-400 font-semibold">Satryo, S.Pd</span> | Disusun khusus untuk Pembelajaran Bahasa Jawa Inovatif</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // 20 CARAKAN & PASANGAN DATA LENGKAP
+    const carakanData = [
+      { jawa: "ꦲ", latin: "Ha", pasangan: "꧀ꦲ", pType: "sejajar (ing sisih tengen)", example: "ꦲꦤ (Ana)", desc: "Awal / Ada" },
+      { jawa: "ꦤ", latin: "Na", pasangan: "꧀ꦤ", pType: "sejajar (ing sisih tengen)", example: "ꦩꦔꦤ꧀ꦤꦱꦶ (Mangan nasi)", desc: "Ada / Manusia" },
+      { jawa: "ꦕ", latin: "Ca", pasangan: "꧀ꦕ", pType: "ing ngisor", example: "ꦕꦃꦪ (Cahya)", desc: "Cahaya / Utusan" },
+      { jawa: "ꦫ", latin: "Ra", pasangan: "꧀ꦫ", pType: "ing ngisor", example: "ꦫꦱ (Rasa)", desc: "Rasa / Jiwa" },
+      { jawa: "ꦏ", latin: "Ka", pasangan: "꧀ꦏ", pType: "ing ngisor (nggantung)", example: "ꦏꦂꦱ (Karsa)", desc: "Karsa / Kehendak" },
+      { jawa: "ꦢ", latin: "Da", pasangan: "꧀ꦢ", pType: "ing ngisor", example: "ꦢꦪ (Daya)", desc: "Daya / Kekuatan" },
+      { jawa: "ꦠ", latin: "Ta", pasangan: "꧀ꦠ", pType: "ing ngisor", example: "ꦠꦠꦏ꧀ (Tatak)", desc: "Tatak / Ketetapan" },
+      { jawa: "ꦱ", latin: "Sa", pasangan: "꧀ꦱ", pType: "sejajar (ing sisih tengen)", example: "ꦱꦸꦕꦶ (Suci)", desc: "Satu / Kesucian" },
+      { jawa: "ꦮ", latin: "Wa", pasangan: "꧀ꦮ", pType: "ing ngisor", example: "ꦮꦱ꧀ꦥꦢ (Waspada)", desc: "Waspada" },
+      { jawa: "ꦭ", latin: "La", pasangan: "꧀ꦭ", pType: "ing ngisor", example: "ꦭꦸꦲꦸꦂ (Luhur)", desc: "Luhur" },
+      { jawa: "ꦥ", latin: "Pa", pasangan: "꧀ꦥ", pType: "sejajar (ing sisih tengen)", example: "ꦥꦫꦱ꧀ (Paras)", desc: "Paras / Wajah" },
+      { jawa: "ꦝ", latin: "Dha", pasangan: "꧀ꦝ", pType: "ing ngisor", example: "ꦝꦲꦂ (Dahar)", desc: "Dahar / Makan" },
+      { jawa: "ꦗ", latin: "Ja", pasangan: "꧀ꦗ", pType: "ing ngisor", example: "ꦗꦸꦗꦸꦂ (Jujur)", desc: "Jujur" },
+      { jawa: "ꦪ", latin: "Ya", pasangan: "꧀ꦪ", pType: "ing ngisor", example: "ꦪꦏꦶꦤ꧀ (Yakin)", desc: "Yakin" },
+      { jawa: "ꦚ", latin: "Nya", pasangan: "꧀ꦚ", pType: "ing ngisor", example: "ꦚꦠ (Nyata)", desc: "Nyata" },
+      { jawa: "ꦩ", latin: "Ma", pasangan: "꧀ꦩ", pType: "ing ngisor", example: "ꦩꦤ꧀ꦠꦥ꧀ (Mantap)", desc: "Mantap" },
+      { jawa: "ꦒ", latin: "Ga", pasangan: "꧀ꦒ", pType: "ing ngisor", example: "ꦒꦒꦃ (Gagah)", desc: "Gagah" },
+      { jawa: "ꦧ", latin: "Ba", pasangan: "꧀ꦧ", pType: "ing ngisor", example: "ꦧꦒꦸꦱ꧀ (Bagus)", desc: "Bagus / Baik" },
+      { jawa: "ꦛ", latin: "Tha", pasangan: "꧀ꦛ", pType: "ing ngisor", example: "ꦛꦺꦴꦏ꧀ (Thok)", desc: "Thok / Teguh" },
+      { jawa: "ꦔ", latin: "Nga", pasangan: "꧀ꦔ", pType: "ing ngisor", example: "ꦔꦧ꧀ꦠꦶ (Ngabti)", desc: "Ngabti / Arah" }
+    ];
+
+    // SANDHANGAN DATA CATEGORIZED
+    const sandhanganSwara = [
+      { symbol: "ꦶ", name: "Wulu", sound: "vokal -i", example: "ꦱꦶ (Si)" },
+      { symbol: "ꦸ", name: "Suku", sound: "vokal -u", example: "ꦱꦸ (Su)" },
+      { symbol: "ꦺ", name: "Taling", sound: "vokal -é", example: "ꦺꦱ (Sé)" },
+      { symbol: "ꦼ", name: "Pepet", sound: "vokal -e", example: "ꦱꦼ (Se)" },
+      { symbol: "ꦺ...ꦴ", name: "Taling Tarung", sound: "vokal -o", example: "ꦺꦱꦴ (So)" }
+    ];
+
+    const sandhanganPanyigeg = [
+      { symbol: "ꦂ", name: "Layar", sound: "mati -r", example: "ꦱꦂ (Sar)" },
+      { symbol: "ꦁ", name: "Cecak", sound: "mati -ng", example: "ꦱꦁ (Sang)" },
+      { symbol: "ꦃ", name: "Wignyan", sound: "mati -h", example: "ꦱꦃ (Sah)" },
+      { symbol: "꧀", name: "Pangkon", sound: "paten (mateni vokal)", example: "ꦩꦔꦤ꧀ (Mangan)" }
+    ];
+
+    const sandhanganWyanjana = [
+      { symbol: "ꦿ", name: "Cakra", sound: "sisipan -ra", example: "ꦏꦿ (Kra)" },
+      { symbol: "ꦾ", name: "Pengkal", sound: "sisipan -ya", example: "ꦏꦾ (Kya)" },
+      { symbol: "ꦽ", name: "Keret", sound: "sisipan -re", example: "ꦏꦽ (Kre)" }
+    ];
+
+    const ukaraData = [
+      { jawa: "ꦱꦶꦤꦲꦸꦗꦮ", latin: "Sinau Jawa", arti: "Belajar Bahasa Jawa" },
+      { jawa: "ꦩꦔꦤ꧀ꦱꦠꦺ", latin: "Mangan Sate", arti: "Makan Sate" },
+      { jawa: "ꦱꦏꦺꦭꦃꦩꦭꦁ", latin: "Sekolah Malang", arti: "Sekolah di Malang" },
+      { jawa: "ꦠꦸꦏꦸꦧꦸꦏꦸ", latin: "Tuku Buku", arti: "Membeli Buku" },
+      { jawa: "ꦧꦠꦏꦠꦱꦥ", latin: "Bata Kata Sapa", arti: "Bata Kata Sapa" }
+    ];
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    let screenHistory = [];
+    let screenForward = [];
+    let currentScreenId = 'menu-screen';
+
+    // AUDIO BACKSOUND & SOUND EFFECTS
+    let isMusicPlaying = false;
+    let musicTimeout = null;
+    let audioCtx = null;
+    const GAMELAN_NOTES = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
+    let musicNoteIndex = 0;
+
+    function playGamelanChime() {
+      if (!isMusicPlaying) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        const freq = GAMELAN_NOTES[musicNoteIndex % GAMELAN_NOTES.length];
+        musicNoteIndex = (musicNoteIndex + 1) % GAMELAN_NOTES.length;
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 1.2);
+
+        const nextDelay = 600 + Math.random() * 400;
+        musicTimeout = setTimeout(playGamelanChime, nextDelay);
+      } catch(e) {}
+    }
+
+    function startJawaMusic() {
+      if (isMusicPlaying) return;
+      isMusicPlaying = true;
+      updateMusicUI();
+      playGamelanChime();
+    }
+
+    function stopJawaMusic() {
+      isMusicPlaying = false;
+      if (musicTimeout) clearTimeout(musicTimeout);
+      updateMusicUI();
+    }
+
+    function toggleBackgroundMusic() {
+      if (isMusicPlaying) stopJawaMusic();
+      else startJawaMusic();
+    }
+
+    function updateMusicUI() {
+      const icon = document.getElementById('music-icon');
+      const text = document.getElementById('music-text');
+      const btn = document.getElementById('music-toggle-btn');
+      if (icon && text && btn) {
+        if (isMusicPlaying) {
+          icon.className = 'fa-solid fa-music text-amber-300 animate-pulse';
+          text.innerText = 'Musik On';
+          btn.classList.add('bg-amber-700');
+        } else {
+          icon.className = 'fa-solid fa-volume-xmark text-stone-400';
+          text.innerText = 'Musik Off';
+          btn.classList.remove('bg-amber-700');
+        }
+      }
+    }
+
+    function startAppWithMusic() {
+      if (!isMusicPlaying) startJawaMusic();
+      showScreen('select-screen');
+    }
+
+    function playAudioPop() {
+      playSound('pop');
+    }
+
+    function playSound(type) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        if (type === 'correct') {
+          osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+          osc.frequency.setValueAtTime(880, ctx.currentTime + 0.1);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.3);
+        } else if (type === 'wrong') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(160, ctx.currentTime);
+          gain.gain.setValueAtTime(0.2, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.3);
+        } else if (type === 'pop') {
+          osc.frequency.setValueAtTime(450, ctx.currentTime);
+          gain.gain.setValueAtTime(0.08, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.08);
+        }
+      } catch(e) {}
+    }
+
+    function showScreen(screenId, isNavigatingHistory = false) {
+      if (!isNavigatingHistory && currentScreenId !== screenId) {
+        screenHistory.push(currentScreenId);
+        screenForward = [];
+      }
+      currentScreenId = screenId;
+
+      const screens = ['menu-screen', 'select-screen', 'sinau-screen', 'maos-screen', 'tangkap-screen', 'nyusun-screen', 'gelembung-screen'];
+      screens.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+
+      const target = document.getElementById(screenId);
+      if (target) target.classList.remove('hidden');
+
+      updateNavButtons();
+
+      if (screenId !== 'tangkap-screen') {
+        tangkapActive = false;
+        tangkap2PActive = false;
+      }
+      if (screenId !== 'gelembung-screen') {
+        gelembungActive1P = false;
+        gelembungActive2P = false;
+      }
+      stopAllGameTimers();
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBackScreen() {
+      if (screenHistory.length > 0) {
+        screenForward.push(currentScreenId);
+        const previous = screenHistory.pop();
+        showScreen(previous, true);
+      }
+    }
+
+    function goNextScreen() {
+      if (screenForward.length > 0) {
+        screenHistory.push(currentScreenId);
+        const next = screenForward.pop();
+        showScreen(next, true);
+      }
+    }
+
+    function updateNavButtons() {
+      const navHome = document.getElementById('nav-home-btn');
+      const navBack = document.getElementById('nav-back-btn');
+      const navNext = document.getElementById('nav-next-btn');
+
+      if (currentScreenId === 'menu-screen') {
+        if (navHome) navHome.classList.add('hidden');
+      } else {
+        if (navHome) navHome.classList.remove('hidden');
+      }
+
+      if (navBack) {
+        if (screenHistory.length > 0) navBack.classList.replace('hidden', 'flex');
+        else navBack.classList.replace('flex', 'hidden');
+      }
+
+      if (navNext) {
+        if (screenForward.length > 0) navNext.classList.replace('hidden', 'flex');
+        else navNext.classList.replace('flex', 'hidden');
+      }
+    }
+
+    let globalTimerInterval = null;
+    function stopAllGameTimers() {
+      if (globalTimerInterval) clearInterval(globalTimerInterval);
+    }
+
+    /* ---------------- SINAU AKSARA MODULE (LENGKAP) ---------------- */
+    function openSinauModule() {
+      showScreen('sinau-screen');
+      renderSinauCarakan();
+      renderSinauSandhangan();
+      renderSinauUkara();
+    }
+
+    function switchSinauTab(tab) {
+      document.getElementById('sinau-tab-pengenalan').classList.add('hidden');
+      document.getElementById('sinau-tab-carakan').classList.add('hidden');
+      document.getElementById('sinau-tab-sandhangan').classList.add('hidden');
+      document.getElementById('sinau-tab-ukara').classList.add('hidden');
+
+      ['pengenalan', 'carakan', 'sandhangan', 'ukara'].forEach(t => {
+        const btn = document.getElementById(`tab-${t}`);
+        if (btn) btn.className = "px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold text-amber-950 hover:bg-amber-300/60 transition";
+      });
+
+      document.getElementById(`sinau-tab-${tab}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-${tab}`);
+      if (activeBtn) activeBtn.className = "px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-700 text-white shadow-sm transition";
+    }
+
+    function renderSinauCarakan() {
+      const grid = document.getElementById('sinau-tab-carakan');
+      grid.innerHTML = carakanData.map(item => `
+        <div class="wood-card p-4 text-center hover:scale-105 transition group cursor-pointer space-y-2" onclick="playAudioPop()">
+          <div class="bg-amber-50 p-2 rounded-xl border border-amber-200">
+            <span class="text-[10px] uppercase font-extrabold text-amber-700 block">Carakan</span>
+            <div class="font-jawa text-4xl font-bold text-amber-950 my-1 group-hover:scale-110 transition">${item.jawa}</div>
+            <div class="font-black text-amber-800 text-lg">${item.latin}</div>
+          </div>
+
+          <div class="bg-indigo-50 p-2 rounded-xl border border-indigo-200">
+            <span class="text-[10px] uppercase font-extrabold text-indigo-700 block">Pasangan</span>
+            <div class="font-jawa text-3xl font-bold text-indigo-950 my-1">${item.pasangan}</div>
+            <span class="text-[10px] font-semibold text-indigo-800">${item.pType}</span>
+          </div>
+
+          <div class="text-[11px] text-stone-600 font-semibold pt-1">
+            Tuladha: <span class="font-jawa text-amber-950 font-bold">${item.example}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderSinauSandhangan() {
+      // Swara
+      document.getElementById('sandhangan-swara-grid').innerHTML = sandhanganSwara.map(item => `
+        <div class="wood-card p-4 flex items-center gap-4 hover:scale-105 transition">
+          <div class="w-14 h-14 bg-amber-100 border-2 border-amber-400 rounded-xl flex items-center justify-center font-jawa text-3xl font-bold text-amber-950 shrink-0">
+            ${item.symbol}
+          </div>
+          <div>
+            <h4 class="font-bold text-amber-950 text-base">${item.name}</h4>
+            <p class="text-xs text-amber-800 font-extrabold">${item.sound}</p>
+            <p class="text-xs text-stone-600 mt-0.5 font-semibold">Tuladha: <span class="font-jawa text-amber-950 font-bold">${item.example}</span></p>
+          </div>
+        </div>
+      `).join('');
+
+      // Panyigeg
+      document.getElementById('sandhangan-panyigeg-grid').innerHTML = sandhanganPanyigeg.map(item => `
+        <div class="wood-card p-4 flex items-center gap-4 hover:scale-105 transition">
+          <div class="w-14 h-14 bg-indigo-100 border-2 border-indigo-400 rounded-xl flex items-center justify-center font-jawa text-3xl font-bold text-indigo-950 shrink-0">
+            ${item.symbol}
+          </div>
+          <div>
+            <h4 class="font-bold text-indigo-950 text-base">${item.name}</h4>
+            <p class="text-xs text-indigo-800 font-extrabold">${item.sound}</p>
+            <p class="text-xs text-stone-600 mt-0.5 font-semibold">Tuladha: <span class="font-jawa text-amber-950 font-bold">${item.example}</span></p>
+          </div>
+        </div>
+      `).join('');
+
+      // Wyanjana
+      document.getElementById('sandhangan-wyanjana-grid').innerHTML = sandhanganWyanjana.map(item => `
+        <div class="wood-card p-4 flex items-center gap-4 hover:scale-105 transition">
+          <div class="w-14 h-14 bg-emerald-100 border-2 border-emerald-400 rounded-xl flex items-center justify-center font-jawa text-3xl font-bold text-emerald-950 shrink-0">
+            ${item.symbol}
+          </div>
+          <div>
+            <h4 class="font-bold text-emerald-950 text-base">${item.name}</h4>
+            <p class="text-xs text-emerald-800 font-extrabold">${item.sound}</p>
+            <p class="text-xs text-stone-600 mt-0.5 font-semibold">Tuladha: <span class="font-jawa text-amber-950 font-bold">${item.example}</span></p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderSinauUkara() {
+      const container = document.getElementById('sinau-tab-ukara');
+      container.innerHTML = ukaraData.map(item => `
+        <div class="wood-card p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 hover:scale-[1.02] transition">
+          <div>
+            <div class="font-jawa text-3xl text-amber-950 font-bold">${item.jawa}</div>
+            <div class="font-extrabold text-amber-800 text-base mt-1">${item.latin}</div>
+          </div>
+          <div class="bg-amber-100 text-amber-950 px-3 py-1.5 rounded-xl text-xs font-bold border border-amber-300">
+            Artine: "${item.arti}"
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* ---------------- MODE 2: MAOS AKSARA (1P & 2P) ---------------- */
+    let maosCurrentLevel = 'gampang';
+    let maosQuestions = [];
+    let maosCurrentIdx = 0;
+    let maosScore = 0;
+
+    let maosP1Score = 0, maosP2Score = 0;
+    let maosP1Q = null, maosP2Q = null;
+    let maos2PTimer = 45;
+
+    const maosDatabaseExpanded = {
+      gampang: [
+        { q: "ꦲ", ans: "Ha", options: ["Ha", "Na", "Ca", "Ra"] },
+        { q: "ꦤ", ans: "Na", options: ["Na", "Ca", "Ra", "Ka"] },
+        { q: "ꦕ", ans: "Ca", options: ["Ca", "Ra", "Ka", "Da"] },
+        { q: "ꦫ", ans: "Ra", options: ["Ra", "Ka", "Da", "Ta"] },
+        { q: "ꦏ", ans: "Ka", options: ["Ka", "Da", "Ta", "Sa"] },
+        { q: "ꦢ", ans: "Da", options: ["Da", "Ta", "Sa", "Wa"] },
+        { q: "ꦠ", ans: "Ta", options: ["Ta", "Sa", "Wa", "La"] },
+        { q: "ꦱ", ans: "Sa", options: ["Sa", "Wa", "La", "Pa"] },
+        { q: "ꦮ", ans: "Wa", options: ["Wa", "La", "Pa", "Dha"] },
+        { q: "ꦭ", ans: "La", options: ["La", "Pa", "Dha", "Ja"] }
+      ],
+      sedengan: [
+        { q: "ꦧꦠ", ans: "Bata", options: ["Bata", "Kata", "Sapa", "Raja"] },
+        { q: "ꦏꦠ", ans: "Kata", options: ["Mata", "Kata", "Bata", "Lawa"] },
+        { q: "ꦱꦥ", ans: "Sapa", options: ["Sapa", "Jawa", "Saya", "Dawa"] },
+        { q: "ꦫꦗ", ans: "Raja", options: ["Raja", "Rana", "Rasa", "Raha"] },
+        { q: "ꦗꦮ", ans: "Jawa", options: ["Jawa", "Sapa", "Raja", "Mata"] },
+        { q: "ꦩꦠ", ans: "Mata", options: ["Mata", "Bata", "Kata", "Sapa"] }
+      ],
+      angel: [
+        { q: "ꦱꦶꦤꦲꦸ", ans: "Sinau", options: ["Sinau", "Tuku", "Buku", "Mangan"] },
+        { q: "ꦠꦸꦏꦸ", ans: "Tuku", options: ["Tuku", "Suku", "Duku", "Kutu"] },
+        { q: "ꦱꦏꦺꦭꦃ", ans: "Sekolah", options: ["Sekolah", "Sarengat", "Semanis", "Semarang"] },
+        { q: "ꦩꦭꦁ", ans: "Malang", options: ["Malang", "Mangan", "Matang", "Mating"] },
+        { q: "ꦱꦠꦺ", ans: "Sate", options: ["Sate", "Soto", "Sore", "Sera"] }
+      ]
+    };
+
+    function triggerMaosFromCard() {
+      const selectedLvl = document.getElementById('maos-level-select-input').value;
+      startMaosQuiz(selectedLvl, '1P');
+    }
+
+    function startMaosQuizDirect(playerMode) {
+      const selectedLvl = document.getElementById('maos-level-select-input').value;
+      startMaosQuiz(selectedLvl, playerMode);
+    }
+
+    function startMaosQuiz(level, mode = '1P') {
+      maosCurrentLevel = level;
+      showScreen('maos-screen');
+
+      document.getElementById('maos-quiz-view').classList.add('hidden');
+      document.getElementById('maos-2p-view').classList.add('hidden');
+      document.getElementById('maos-result-view').classList.add('hidden');
+
+      if (mode === '1P') {
+        const pool = shuffleArray(maosDatabaseExpanded[level]);
+        maosQuestions = pool.slice(0, 5).map(q => ({
+          ...q,
+          options: shuffleArray(q.options)
+        }));
+        maosCurrentIdx = 0;
+        maosScore = 0;
+
+        document.getElementById('maos-quiz-view').classList.remove('hidden');
+        document.getElementById('maos-level-tag').innerText = `Level: ${level.toUpperCase()}`;
+        loadMaosQuestion();
+      } else {
+        document.getElementById('maos-2p-view').classList.remove('hidden');
+        document.getElementById('maos-2p-level-tag').innerText = `Level: ${level.toUpperCase()}`;
+
+        maosP1Score = 0; maosP2Score = 0; maos2PTimer = 45;
+        document.getElementById('maos-p1-score').innerText = 0;
+        document.getElementById('maos-p2-score').innerText = 0;
+        document.getElementById('maos-2p-timer').innerText = maos2PTimer;
+
+        loadMaos2PQ('p1');
+        loadMaos2PQ('p2');
+
+        stopAllGameTimers();
+        globalTimerInterval = setInterval(() => {
+          maos2PTimer--;
+          document.getElementById('maos-2p-timer').innerText = maos2PTimer;
+          if (maos2PTimer <= 0) {
+            stopAllGameTimers();
+            showMaos2PResult();
+          }
+        }, 1000);
+      }
+    }
+
+    function loadMaosQuestion() {
+      const qData = maosQuestions[maosCurrentIdx];
+      document.getElementById('maos-score').innerText = maosScore;
+      document.getElementById('maos-progress').innerText = `${maosCurrentIdx + 1}/${maosQuestions.length}`;
+      document.getElementById('maos-question-display').innerText = qData.q;
+      
+      const feedback = document.getElementById('maos-feedback');
+      feedback.className = "hidden p-3 text-center rounded-xl font-bold text-sm";
+
+      const container = document.getElementById('maos-options-container');
+      container.innerHTML = qData.options.map(opt => `
+        <button onclick="playAudioPop(); checkMaosAnswer('${opt}')" class="wood-card p-4 text-amber-950 font-black text-lg hover:border-amber-600 transition active:scale-95">
+          ${opt}
+        </button>
+      `).join('');
+    }
+
+    function checkMaosAnswer(selected) {
+      const qData = maosQuestions[maosCurrentIdx];
+      const feedback = document.getElementById('maos-feedback');
+      feedback.classList.remove('hidden');
+
+      if (selected === qData.ans) {
+        playSound('correct');
+        maosScore += 20;
+        feedback.className = "p-3 text-center rounded-xl font-bold text-sm bg-emerald-100 text-emerald-800 border-2 border-emerald-400";
+        feedback.innerHTML = `<i class="fa-solid fa-circle-check"></i> Bener! Jawaban sampeyan tepat.`;
+      } else {
+        playSound('wrong');
+        feedback.className = "p-3 text-center rounded-xl font-bold text-sm bg-rose-100 text-rose-800 border-2 border-rose-400";
+        feedback.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> Kurang Tepat! Jawaban sing bener: <strong>${qData.ans}</strong>`;
+      }
+
+      setTimeout(() => {
+        maosCurrentIdx++;
+        if (maosCurrentIdx < maosQuestions.length) {
+          loadMaosQuestion();
+        } else {
+          showMaos1PResult();
+        }
+      }, 1000);
+    }
+
+    function loadMaos2PQ(player) {
+      const pool = maosDatabaseExpanded[maosCurrentLevel];
+      const randomQ = pool[Math.floor(Math.random() * pool.length)];
+      const item = { ...randomQ, options: shuffleArray(randomQ.options) };
+
+      if (player === 'p1') {
+        maosP1Q = item;
+        document.getElementById('maos-p1-q').innerText = item.q;
+        document.getElementById('maos-p1-opts').innerHTML = item.options.map(opt => `
+          <button onclick="checkMaos2PAnswer('p1', '${opt}')" class="wood-card py-2.5 px-2 text-indigo-950 font-extrabold text-sm hover:bg-indigo-50 border-indigo-300">
+            ${opt}
+          </button>
+        `).join('');
+      } else {
+        maosP2Q = item;
+        document.getElementById('maos-p2-q').innerText = item.q;
+        document.getElementById('maos-p2-opts').innerHTML = item.options.map(opt => `
+          <button onclick="checkMaos2PAnswer('p2', '${opt}')" class="wood-card py-2.5 px-2 text-emerald-950 font-extrabold text-sm hover:bg-emerald-50 border-emerald-300">
+            ${opt}
+          </button>
+        `).join('');
+      }
+    }
+
+    function checkMaos2PAnswer(player, selected) {
+      const q = (player === 'p1') ? maosP1Q : maosP2Q;
+      const msgEl = document.getElementById(player === 'p1' ? 'maos-p1-msg' : 'maos-p2-msg');
+
+      if (selected === q.ans) {
+        playSound('correct');
+        if (player === 'p1') {
+          maosP1Score += 10;
+          document.getElementById('maos-p1-score').innerText = maosP1Score;
+          msgEl.className = "text-xs text-center font-bold text-emerald-600";
+          msgEl.innerText = "✨ Bener (+10)";
+        } else {
+          maosP2Score += 10;
+          document.getElementById('maos-p2-score').innerText = maosP2Score;
+          msgEl.className = "text-xs text-center font-bold text-emerald-600";
+          msgEl.innerText = "✨ Bener (+10)";
+        }
+      } else {
+        playSound('wrong');
+        msgEl.className = "text-xs text-center font-bold text-rose-600";
+        msgEl.innerText = "❌ Salah!";
+      }
+
+      setTimeout(() => {
+        msgEl.innerText = "";
+        loadMaos2PQ(player);
+      }, 500);
+    }
+
+    function showMaos1PResult() {
+      document.getElementById('maos-quiz-view').classList.add('hidden');
+      document.getElementById('maos-result-view').classList.remove('hidden');
+      document.getElementById('maos-result-title').innerText = "Hasil Maos Aksara";
+      document.getElementById('maos-result-sub').innerText = "Pak Satryo bangga kalih usaha sampeyan!";
+      document.getElementById('maos-result-body').innerHTML = `
+        <span class="text-xs text-stone-500 uppercase font-bold tracking-wider">Skor Akhir</span>
+        <div class="text-5xl font-black text-amber-800 my-1">${maosScore}</div>
+      `;
+    }
+
+    function showMaos2PResult() {
+      document.getElementById('maos-2p-view').classList.add('hidden');
+      document.getElementById('maos-result-view').classList.remove('hidden');
+
+      let winnerText = "";
+      if (maosP1Score > maosP2Score) winnerText = "🎉 PEMAIN 1 MENANG! 🏆";
+      else if (maosP2Score > maosP1Score) winnerText = "🎉 PEMAIN 2 MENANG! 🏆";
+      else winnerText = "🤝 HASIL SERI / IMBANG!";
+
+      document.getElementById('maos-result-title').innerText = winnerText;
+      document.getElementById('maos-result-sub').innerText = "Tandingan Maos Aksara Sampun Rampung!";
+      document.getElementById('maos-result-body').innerHTML = `
+        <div class="grid grid-cols-2 gap-4 text-center">
+          <div class="bg-indigo-100 p-3 rounded-xl border border-indigo-300">
+            <div class="text-xs font-bold text-indigo-800">PEMAIN 1</div>
+            <div class="text-3xl font-black text-indigo-950">${maosP1Score}</div>
+          </div>
+          <div class="bg-emerald-100 p-3 rounded-xl border border-emerald-300">
+            <div class="text-xs font-bold text-emerald-800">PEMAIN 2</div>
+            <div class="text-3xl font-black text-emerald-950">${maosP2Score}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ---------------- MODE 3: TANGKAP AKSARA (1P & 2P) ---------------- */
+    let tangkapMode = '1P';
+    let tangkapActive = false, tangkap2PActive = false;
+    let tangkapScore = 0, tangkapLives = 3, tangkapTarget = null;
+    let basketX = 160;
+    let fallingItems = [];
+    let animFrameId = null;
+    let tangkapSpeedFactor = 0.8;
+
+    let t2pTimer = 40;
+    let t2pP1Score = 0, t2pP2Score = 0;
+    let t2pP1Lives = 3, t2pP2Lives = 3;
+    let t2pP1Target = null, t2pP2Target = null;
+    let t2pBasketP1X = 120, t2pBasketP2X = 120;
+    let t2pFallingP1 = [], t2pFallingP2 = [];
+
+    function triggerTangkapFromCard() { startTangkapDirect('1P'); }
+
+    function startTangkapDirect(playerMode) {
+      tangkapMode = playerMode;
+      const speedChoice = document.getElementById('tangkap-speed-select').value;
+      if (speedChoice === 'alon') tangkapSpeedFactor = 0.5;
+      else if (speedChoice === 'sedengan') tangkapSpeedFactor = 0.9;
+      else tangkapSpeedFactor = 1.4;
+
+      showScreen('tangkap-screen');
+      setTimeout(initTangkapGame, 100);
+    }
+
+    function initTangkapGame() {
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+      stopAllGameTimers();
+
+      const container1P = document.getElementById('tangkap-1p-container');
+      const container2P = document.getElementById('tangkap-2p-container');
+
+      if (tangkapMode === '1P') {
+        container1P.classList.remove('hidden');
+        container2P.classList.add('hidden');
+
+        document.getElementById('tangkap-mode-title').innerText = "3. Tangkap Aksara (1 Pemain)";
+        document.getElementById('tangkap-mode-desc').innerText = "Geser keranjang menyang kiwa/tengen kanggo nangkep aksara sing bener!";
+
+        const canvas = document.getElementById('tangkapCanvas');
+        canvas.width = 400; canvas.height = 300;
+
+        tangkapScore = 0; tangkapLives = 3; basketX = 160;
+        fallingItems = []; tangkapActive = true;
+
+        pickNewTangkapTarget();
+        updateTangkapHUD();
+
+        window.onkeydown = (e) => {
+          if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") basketX = Math.max(0, basketX - 25);
+          if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") basketX = Math.min(320, basketX + 25);
+        };
+
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+        if (btnLeft && btnRight) {
+          btnLeft.onclick = () => { basketX = Math.max(0, basketX - 30); playSound('pop'); };
+          btnRight.onclick = () => { basketX = Math.min(320, basketX + 30); playSound('pop'); };
+        }
+
+        tangkapGameLoop1P();
+
+      } else {
+        container1P.classList.add('hidden');
+        container2P.classList.remove('hidden');
+
+        document.getElementById('tangkap-mode-title').innerText = "3. Tangkap Aksara (2 Pemain ⚔️)";
+        document.getElementById('tangkap-mode-desc').innerText = "Tandingan nangkep aksara! P1: A/D | P2: Panah Kiwa/Tengen";
+
+        const c1 = document.getElementById('tangkapCanvasP1');
+        const c2 = document.getElementById('tangkapCanvasP2');
+        c1.width = 320; c1.height = 240;
+        c2.width = 320; c2.height = 240;
+
+        t2pTimer = 40;
+        t2pP1Score = 0; t2pP2Score = 0;
+        t2pP1Lives = 3; t2pP2Lives = 3;
+        t2pBasketP1X = 120; t2pBasketP2X = 120;
+        t2pFallingP1 = []; t2pFallingP2 = [];
+        tangkap2PActive = true;
+
+        t2pP1Target = carakanData[Math.floor(Math.random() * carakanData.length)];
+        t2pP2Target = carakanData[Math.floor(Math.random() * carakanData.length)];
+
+        updateTangkap2PHUD();
+
+        window.onkeydown = (e) => {
+          if (e.key === "a" || e.key === "A") t2pBasketP1X = Math.max(0, t2pBasketP1X - 25);
+          if (e.key === "d" || e.key === "D") t2pBasketP1X = Math.min(240, t2pBasketP1X + 25);
+          if (e.key === "ArrowLeft") t2pBasketP2X = Math.max(0, t2pBasketP2X - 25);
+          if (e.key === "ArrowRight") t2pBasketP2X = Math.min(240, t2pBasketP2X + 25);
+        };
+
+        document.getElementById('t2p-p1-btn-left').onclick = () => { t2pBasketP1X = Math.max(0, t2pBasketP1X - 25); };
+        document.getElementById('t2p-p1-btn-right').onclick = () => { t2pBasketP1X = Math.min(240, t2pBasketP1X + 25); };
+        document.getElementById('t2p-p2-btn-left').onclick = () => { t2pBasketP2X = Math.max(0, t2pBasketP2X - 25); };
+        document.getElementById('t2p-p2-btn-right').onclick = () => { t2pBasketP2X = Math.min(240, t2pBasketP2X + 25); };
+
+        globalTimerInterval = setInterval(() => {
+          t2pTimer--;
+          document.getElementById('tangkap-2p-timer').innerText = t2pTimer;
+          if (t2pTimer <= 0) {
+            tangkap2PActive = false;
+            stopAllGameTimers();
+            showTangkap2POver();
+          }
+        }, 1000);
+
+        tangkapGameLoop2P();
+      }
+    }
+
+    function pickNewTangkapTarget() {
+      const randomChar = carakanData[Math.floor(Math.random() * carakanData.length)];
+      tangkapTarget = randomChar;
+      document.getElementById('tangkap-target').innerText = randomChar.latin;
+    }
+
+    function updateTangkapHUD() {
+      document.getElementById('tangkap-score').innerText = tangkapScore;
+      document.getElementById('tangkap-lives').innerText = "❤️".repeat(tangkapLives);
+    }
+
+    function updateTangkap2PHUD() {
+      document.getElementById('t2p-p1-target').innerText = t2pP1Target.latin;
+      document.getElementById('t2p-p2-target').innerText = t2pP2Target.latin;
+      document.getElementById('t2p-p1-score').innerText = t2pP1Score;
+      document.getElementById('t2p-p2-score').innerText = t2pP2Score;
+      document.getElementById('t2p-p1-lives').innerText = "❤️".repeat(Math.max(0, t2pP1Lives));
+      document.getElementById('t2p-p2-lives').innerText = "❤️".repeat(Math.max(0, t2pP2Lives));
+    }
+
+    function tangkapGameLoop1P() {
+      if (!tangkapActive) return;
+
+      const canvas = document.getElementById('tangkapCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (Math.random() < 0.02 && fallingItems.length < 3) {
+        const isTarget = Math.random() < 0.5;
+        const charObj = isTarget ? tangkapTarget : carakanData[Math.floor(Math.random() * carakanData.length)];
+        fallingItems.push({
+          x: Math.random() * 340 + 10,
+          y: -30,
+          speed: (0.5 + Math.random() * 0.5) * tangkapSpeedFactor,
+          data: charObj
+        });
+      }
+
+      ctx.fillStyle = "#d97706";
+      ctx.beginPath();
+      ctx.roundRect(basketX, 260, 80, 25, 8);
+      ctx.fill();
+      ctx.strokeStyle = "#78350f";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 12px sans-serif";
+      ctx.fillText("KERANJANG", basketX + 8, 276);
+
+      for (let i = fallingItems.length - 1; i >= 0; i--) {
+        let item = fallingItems[i];
+        item.y += item.speed;
+
+        ctx.fillStyle = "#fef3c7";
+        ctx.beginPath();
+        ctx.arc(item.x + 15, item.y + 15, 20, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#d97706";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = "#362419";
+        ctx.font = "bold 20px 'Noto Sans Javanese', sans-serif";
+        ctx.fillText(item.data.jawa, item.x + 5, item.y + 22);
+
+        if (item.y + 30 >= 260 && item.x + 30 >= basketX && item.x <= basketX + 80) {
+          if (item.data.latin === tangkapTarget.latin) {
+            playSound('correct');
+            tangkapScore += 10;
+            pickNewTangkapTarget();
+          } else {
+            playSound('wrong');
+            tangkapLives--;
+            if (tangkapLives <= 0) {
+              tangkapActive = false;
+              alert(`Game Over! Skor Akhir Anda: ${tangkapScore}`);
+              initTangkapGame();
+              return;
+            }
+          }
+          updateTangkapHUD();
+          fallingItems.splice(i, 1);
+          continue;
+        }
+
+        if (item.y > 300) fallingItems.splice(i, 1);
+      }
+
+      animFrameId = requestAnimationFrame(tangkapGameLoop1P);
+    }
+
+    function tangkapGameLoop2P() {
+      if (!tangkap2PActive) return;
+
+      const c1 = document.getElementById('tangkapCanvasP1');
+      const ctx1 = c1.getContext('2d');
+      ctx1.clearRect(0, 0, c1.width, c1.height);
+
+      if (Math.random() < 0.025 && t2pFallingP1.length < 3) {
+        const isTarget = Math.random() < 0.5;
+        t2pFallingP1.push({
+          x: Math.random() * 260 + 10,
+          y: -20,
+          speed: (0.6 + Math.random() * 0.6) * tangkapSpeedFactor,
+          data: isTarget ? t2pP1Target : carakanData[Math.floor(Math.random() * carakanData.length)]
+        });
+      }
+
+      ctx1.fillStyle = "#4f46e5";
+      ctx1.beginPath();
+      ctx1.roundRect(t2pBasketP1X, 205, 80, 22, 6);
+      ctx1.fill();
+
+      for (let i = t2pFallingP1.length - 1; i >= 0; i--) {
+        let item = t2pFallingP1[i];
+        item.y += item.speed;
+
+        ctx1.fillStyle = "#e0e7ff";
+        ctx1.beginPath();
+        ctx1.arc(item.x + 12, item.y + 12, 16, 0, Math.PI * 2);
+        ctx1.fill();
+
+        ctx1.fillStyle = "#1e1b4b";
+        ctx1.font = "bold 16px 'Noto Sans Javanese', sans-serif";
+        ctx1.fillText(item.data.jawa, item.x + 4, item.y + 18);
+
+        if (item.y + 24 >= 205 && item.x + 24 >= t2pBasketP1X && item.x <= t2pBasketP1X + 80) {
+          if (item.data.latin === t2pP1Target.latin) {
+            playSound('correct');
+            t2pP1Score += 10;
+            t2pP1Target = carakanData[Math.floor(Math.random() * carakanData.length)];
+          } else {
+            playSound('wrong');
+            t2pP1Lives--;
+          }
+          updateTangkap2PHUD();
+          t2pFallingP1.splice(i, 1);
+          continue;
+        }
+        if (item.y > 240) t2pFallingP1.splice(i, 1);
+      }
+
+      const c2 = document.getElementById('tangkapCanvasP2');
+      const ctx2 = c2.getContext('2d');
+      ctx2.clearRect(0, 0, c2.width, c2.height);
+
+      if (Math.random() < 0.025 && t2pFallingP2.length < 3) {
+        const isTarget = Math.random() < 0.5;
+        t2pFallingP2.push({
+          x: Math.random() * 260 + 10,
+          y: -20,
+          speed: (0.6 + Math.random() * 0.6) * tangkapSpeedFactor,
+          data: isTarget ? t2pP2Target : carakanData[Math.floor(Math.random() * carakanData.length)]
+        });
+      }
+
+      ctx2.fillStyle = "#059669";
+      ctx2.beginPath();
+      ctx2.roundRect(t2pBasketP2X, 205, 80, 22, 6);
+      ctx2.fill();
+
+      for (let i = t2pFallingP2.length - 1; i >= 0; i--) {
+        let item = t2pFallingP2[i];
+        item.y += item.speed;
+
+        ctx2.fillStyle = "#d1fae5";
+        ctx2.beginPath();
+        ctx2.arc(item.x + 12, item.y + 12, 16, 0, Math.PI * 2);
+        ctx2.fill();
+
+        ctx2.fillStyle = "#064e3b";
+        ctx2.font = "bold 16px 'Noto Sans Javanese', sans-serif";
+        ctx2.fillText(item.data.jawa, item.x + 4, item.y + 18);
+
+        if (item.y + 24 >= 205 && item.x + 24 >= t2pBasketP2X && item.x <= t2pBasketP2X + 80) {
+          if (item.data.latin === t2pP2Target.latin) {
+            playSound('correct');
+            t2pP2Score += 10;
+            t2pP2Target = carakanData[Math.floor(Math.random() * carakanData.length)];
+          } else {
+            playSound('wrong');
+            t2pP2Lives--;
+          }
+          updateTangkap2PHUD();
+          t2pFallingP2.splice(i, 1);
+          continue;
+        }
+        if (item.y > 240) t2pFallingP2.splice(i, 1);
+      }
+
+      if (t2pP1Lives <= 0 || t2pP2Lives <= 0) {
+        tangkap2PActive = false;
+        stopAllGameTimers();
+        showTangkap2POver();
+        return;
+      }
+
+      animFrameId = requestAnimationFrame(tangkapGameLoop2P);
+    }
+
+    function showTangkap2POver() {
+      let winMsg = "";
+      if (t2pP1Score > t2pP2Score) winMsg = "🏆 PEMAIN 1 MENANG!";
+      else if (t2pP2Score > t2pP1Score) winMsg = "🏆 PEMAIN 2 MENANG!";
+      else winMsg = "🤝 SKOR SERI / IMBANG!";
+
+      alert(`${winMsg}\n\nSkor Akhir:\nPemain 1: ${t2pP1Score}\nPemain 2: ${t2pP2Score}`);
+      showScreen('select-screen');
+    }
+
+    /* ---------------- MODE 4: NYUSUN AKSARA (1P & 2P) ---------------- */
+    const nyusunWordsMaster = [
+      { target: "SEKOLAH", slots: ["ꦱ", "ꦏꦺ", "ꦭꦃ"], pool: ["ꦱ", "ꦏꦺ", "ꦭꦃ", "ꦩ", "ꦠ"] },
+      { target: "MALANG", slots: ["ꦩ", "ꦭꦁ"], pool: ["ꦩ", "ꦭꦁ", "ꦏ", "ꦫ"] },
+      { target: "SINAU", slots: ["ꦱꦶ", "ꦤ", "ꦲꦸ"], pool: ["ꦱꦶ", "ꦤ", "ꦲꦸ", "ꦠ", "ꦧ"] },
+      { target: "SATE", slots: ["ꦱ", "ꦠꦺ"], pool: ["ꦱ", "ꦠꦺ", "ꦩ", "ꦭ"] },
+      { target: "SOTO", slots: ["ꦱꦺꦴ", "ꦠꦺꦴ"], pool: ["ꦱꦺꦴ", "ꦠꦺꦴ", "ꦧꦺꦴ", "ꦏꦺꦴ"] },
+      { target: "TUKU", slots: ["ꦠꦸ", "ꦏꦸ"], pool: ["ꦠꦸ", "ꦏꦸ", "ꦧꦸ", "ꦱꦸ"] },
+      { target: "BUKU", slots: ["ꦧꦸ", "ꦏꦸ"], pool: ["ꦧꦸ", "ꦏꦸ", "ꦠꦸ", "ꦭꦸ"] },
+      { target: "JAWA", slots: ["ꦗ", "ꦮ"], pool: ["ꦗ", "ꦮ", "ꦱ", "ꦥ"] },
+      { target: "BATA", slots: ["ꦧ", "ꦠ"], pool: ["ꦧ", "ꦠ", "ꦏ", "ꦫ"] },
+      { target: "RAJA", slots: ["ꦫ", "ꦗ"], pool: ["ꦫ", "ꦗ", "ꦩ", "ꦠ"] }
+    ];
+
+    let nyusunMode = '1P';
+    let nyusunSessionWords = [];
+    let nyusunCurrentIdx = 0;
+    let nyusunSelected = [];
+    let nyusunScore = 0;
+    let nyusunLives = 3;
+
+    let n2pTimer = 60;
+    let n2pP1Score = 0, n2pP2Score = 0;
+    let n2pP1Data = null, n2pP2Data = null;
+    let n2pP1Sel = [], n2pP2Sel = [];
+
+    function triggerNyusunFromCard() { startNyusunDirect('1P'); }
+
+    function startNyusunDirect(playerMode) {
+      nyusunMode = playerMode;
+      showScreen('nyusun-screen');
+
+      document.getElementById('nyusun-game-view').classList.add('hidden');
+      document.getElementById('nyusun-2p-view').classList.add('hidden');
+      document.getElementById('nyusun-result-view').classList.add('hidden');
+
+      if (playerMode === '1P') {
+        document.getElementById('nyusun-mode-title').innerText = "4. Nyusun Aksara (1 Pemain)";
+        document.getElementById('nyusun-mode-desc').innerText = "Klik kartu Aksara Jawa ing ngisor kanggo nyusun tembung Latin!";
+        document.getElementById('nyusun-game-view').classList.remove('hidden');
+
+        nyusunSessionWords = shuffleArray(nyusunWordsMaster).slice(0, 10);
+        nyusunCurrentIdx = 0; nyusunScore = 0; nyusunLives = 3;
+        loadNyusunLevel();
+      } else {
+        document.getElementById('nyusun-mode-title').innerText = "4. Nyusun Aksara (2 Pemain ⚔️)";
+        document.getElementById('nyusun-mode-desc').innerText = "Lomba nyusun aksara Jawa paling cepet ing layar split!";
+        document.getElementById('nyusun-2p-view').classList.remove('hidden');
+
+        n2pTimer = 60;
+        n2pP1Score = 0; n2pP2Score = 0;
+        document.getElementById('n2p-p1-score').innerText = 0;
+        document.getElementById('n2p-p2-score').innerText = 0;
+        document.getElementById('nyusun-2p-timer').innerText = n2pTimer;
+
+        loadNyusun2PWord('p1');
+        loadNyusun2PWord('p2');
+
+        stopAllGameTimers();
+        globalTimerInterval = setInterval(() => {
+          n2pTimer--;
+          document.getElementById('nyusun-2p-timer').innerText = n2pTimer;
+          if (n2pTimer <= 0) {
+            stopAllGameTimers();
+            showNyusun2PResult();
+          }
+        }, 1000);
+      }
+    }
+
+    function loadNyusunLevel() {
+      const data = nyusunSessionWords[nyusunCurrentIdx];
+      document.getElementById('nyusun-target-word').innerText = data.target;
+      document.getElementById('nyusun-progress').innerText = `${nyusunCurrentIdx + 1}/10`;
+      document.getElementById('nyusun-score').innerText = nyusunScore;
+      document.getElementById('nyusun-lives').innerText = "❤️".repeat(nyusunLives);
+
+      nyusunSelected = [];
+      renderNyusunSlots();
+      renderNyusunPool(shuffleArray(data.pool));
+    }
+
+    function renderNyusunSlots() {
+      const slotsContainer = document.getElementById('nyusun-slots');
+      if (nyusunSelected.length === 0) {
+        slotsContainer.innerHTML = `<span class="text-xs text-stone-500 italic font-medium">Klik kartu di bawah untuk memasukkan ke sini...</span>`;
+        return;
+      }
+
+      slotsContainer.innerHTML = nyusunSelected.map((item, idx) => `
+        <div onclick="removeNyusunCard(${idx})" class="w-16 h-16 rounded-2xl bg-amber-600 text-white font-jawa font-bold text-3xl flex items-center justify-center shadow-md cursor-pointer hover:bg-rose-600 transition transform active:scale-90 border-2 border-amber-300">
+          ${item}
+        </div>
+      `).join('');
+    }
+
+    function renderNyusunPool(poolCards) {
+      const poolContainer = document.getElementById('nyusun-pool');
+      poolContainer.innerHTML = poolCards.map((card) => `
+        <button onclick="selectNyusunCard('${card}')" class="w-16 h-16 rounded-2xl wood-card text-amber-950 font-jawa font-bold text-3xl flex items-center justify-center hover:border-amber-600 active:scale-95 transition border">
+          ${card}
+        </button>
+      `).join('');
+    }
+
+    function selectNyusunCard(card) {
+      playSound('pop');
+      nyusunSelected.push(card);
+      renderNyusunSlots();
+    }
+
+    function removeNyusunCard(index) {
+      playSound('pop');
+      nyusunSelected.splice(index, 1);
+      renderNyusunSlots();
+    }
+
+    function resetNyusunCurrent() {
+      nyusunSelected = [];
+      renderNyusunSlots();
+    }
+
+    function checkNyusunAnswer() {
+      const currentLevel = nyusunSessionWords[nyusunCurrentIdx];
+      const isCorrect = JSON.stringify(nyusunSelected) === JSON.stringify(currentLevel.slots);
+
+      if (isCorrect) {
+        playSound('correct');
+        nyusunScore += 10;
+        nyusunCurrentIdx++;
+
+        if (nyusunCurrentIdx < nyusunSessionWords.length) {
+          loadNyusunLevel();
+        } else {
+          showNyusun1PResult();
+        }
+      } else {
+        playSound('wrong');
+        nyusunLives--;
+        document.getElementById('nyusun-lives').innerText = "❤️".repeat(Math.max(0, nyusunLives));
+
+        if (nyusunLives <= 0) {
+          showNyusun1PResult();
+        } else {
+          alert("❌ Durung bener! Nyawa sampeyan berkurang 1. Coba diatur maneh ya.");
+          resetNyusunCurrent();
+        }
+      }
+    }
+
+    function loadNyusun2PWord(player) {
+      const randomItem = nyusunWordsMaster[Math.floor(Math.random() * nyusunWordsMaster.length)];
+      if (player === 'p1') {
+        n2pP1Data = randomItem;
+        n2pP1Sel = [];
+        document.getElementById('n2p-p1-target').innerText = randomItem.target;
+        render2PNyusunUI('p1');
+      } else {
+        n2pP2Data = randomItem;
+        n2pP2Sel = [];
+        document.getElementById('n2p-p2-target').innerText = randomItem.target;
+        render2PNyusunUI('p2');
+      }
+    }
+
+    function render2PNyusunUI(player) {
+      const isP1 = (player === 'p1');
+      const data = isP1 ? n2pP1Data : n2pP2Data;
+      const selArr = isP1 ? n2pP1Sel : n2pP2Sel;
+      const slotsEl = document.getElementById(isP1 ? 'n2p-p1-slots' : 'n2p-p2-slots');
+      const poolEl = document.getElementById(isP1 ? 'n2p-p1-pool' : 'n2p-p2-pool');
+
+      if (selArr.length === 0) {
+        slotsEl.innerHTML = `<span class="text-[11px] text-stone-400 italic">Pilih kartu ing ngisor...</span>`;
+      } else {
+        slotsEl.innerHTML = selArr.map((item, idx) => `
+          <div onclick="remove2PNyusunCard('${player}', ${idx})" class="w-10 h-10 rounded-xl bg-amber-600 text-white font-jawa font-bold text-lg flex items-center justify-center cursor-pointer border border-amber-300">
+            ${item}
+          </div>
+        `).join('');
+      }
+
+      poolEl.innerHTML = data.pool.map((card) => `
+        <button onclick="select2PNyusunCard('${player}', '${card}')" class="w-10 h-10 rounded-xl bg-amber-50 text-amber-950 font-jawa font-bold text-lg flex items-center justify-center border border-amber-400 hover:bg-amber-100">
+          ${card}
+        </button>
+      `).join('');
+    }
+
+    function select2PNyusunCard(player, card) {
+      playSound('pop');
+      if (player === 'p1') n2pP1Sel.push(card);
+      else n2pP2Sel.push(card);
+      render2PNyusunUI(player);
+    }
+
+    function remove2PNyusunCard(player, idx) {
+      playSound('pop');
+      if (player === 'p1') n2pP1Sel.splice(idx, 1);
+      else n2pP2Sel.splice(idx, 1);
+      render2PNyusunUI(player);
+    }
+
+    function resetNyusun2P(player) {
+      if (player === 'p1') n2pP1Sel = [];
+      else n2pP2Sel = [];
+      render2PNyusunUI(player);
+    }
+
+    function checkNyusun2P(player) {
+      const isP1 = (player === 'p1');
+      const data = isP1 ? n2pP1Data : n2pP2Data;
+      const selArr = isP1 ? n2pP1Sel : n2pP2Sel;
+
+      if (JSON.stringify(selArr) === JSON.stringify(data.slots)) {
+        playSound('correct');
+        if (isP1) {
+          n2pP1Score += 10;
+          document.getElementById('n2p-p1-score').innerText = n2pP1Score;
+        } else {
+          n2pP2Score += 10;
+          document.getElementById('n2p-p2-score').innerText = n2pP2Score;
+        }
+        loadNyusun2PWord(player);
+      } else {
+        playSound('wrong');
+        alert("❌ Pilihan aksara durung bener!");
+        resetNyusun2P(player);
+      }
+    }
+
+    function showNyusun1PResult() {
+      document.getElementById('nyusun-game-view').classList.add('hidden');
+      document.getElementById('nyusun-result-view').classList.remove('hidden');
+      document.getElementById('nyusun-result-title').innerText = "Hasil Nyusun Aksara";
+      document.getElementById('nyusun-result-sub').innerText = "Hebat! Terus kembangke kemampuan nyusun aksara!";
+      document.getElementById('nyusun-result-body').innerHTML = `
+        <span class="text-xs text-stone-500 uppercase font-bold tracking-wider">Skor Akhir</span>
+        <div class="text-5xl font-black text-amber-800 my-1">${nyusunScore}</div>
+      `;
+    }
+
+    function showNyusun2PResult() {
+      document.getElementById('nyusun-2p-view').classList.add('hidden');
+      document.getElementById('nyusun-result-view').classList.remove('hidden');
+
+      let winnerText = "";
+      if (n2pP1Score > n2pP2Score) winnerText = "🎉 PEMAIN 1 MENANG! 🏆";
+      else if (n2pP2Score > n2pP1Score) winnerText = "🎉 PEMAIN 2 MENANG! 🏆";
+      else winnerText = "🤝 HASIL SERI / IMBANG!";
+
+      document.getElementById('nyusun-result-title').innerText = winnerText;
+      document.getElementById('nyusun-result-sub').innerText = "Tandingan Nyusun Aksara Sampun Rampung!";
+      document.getElementById('nyusun-result-body').innerHTML = `
+        <div class="grid grid-cols-2 gap-4 text-center">
+          <div class="bg-indigo-100 p-3 rounded-xl border border-indigo-300">
+            <div class="text-xs font-bold text-indigo-800">PEMAIN 1</div>
+            <div class="text-3xl font-black text-indigo-950">${n2pP1Score}</div>
+          </div>
+          <div class="bg-emerald-100 p-3 rounded-xl border border-emerald-300">
+            <div class="text-xs font-bold text-emerald-800">PEMAIN 2</div>
+            <div class="text-3xl font-black text-emerald-950">${n2pP2Score}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ---------------- MODE 5: PECAH GELEMBUNG (BUBBLE POP) ---------------- */
+    let gelembungMode = '1P';
+    let gelembungActive1P = false, gelembungActive2P = false;
+    let gelembungScore = 0, gelembungRound = 1, gelembungLives = 3;
+    let gelembungTargetChar = null;
+    let gelembungSpeedMult = 1.0;
+
+    let bubbles1P = [];
+    let animFrameGelembung1P = null, animFrameGelembung2P = null;
+
+    // 2P Gelembung State
+    let g2pTimer = 45;
+    let g2pP1Score = 0, g2pP2Score = 0;
+    let g2pP1Target = null, g2pP2Target = null;
+    let bubblesP1 = [], bubblesP2 = [];
+
+    function triggerGelembungFromCard() { startGelembungDirect('1P'); }
+
+    function startGelembungDirect(playerMode) {
+      gelembungMode = playerMode;
+      const speedChoice = document.getElementById('gelembung-speed-select').value;
+      if (speedChoice === 'alon') gelembungSpeedMult = 0.6;
+      else if (speedChoice === 'sedengan') gelembungSpeedMult = 1.0;
+      else gelembungSpeedMult = 1.6;
+
+      showScreen('gelembung-screen');
+      setTimeout(initGelembungGame, 100);
+    }
+
+    function initGelembungGame() {
+      if (animFrameGelembung1P) cancelAnimationFrame(animFrameGelembung1P);
+      if (animFrameGelembung2P) cancelAnimationFrame(animFrameGelembung2P);
+      stopAllGameTimers();
+
+      const container1P = document.getElementById('gelembung-1p-container');
+      const container2P = document.getElementById('gelembung-2p-container');
+
+      if (gelembungMode === '1P') {
+        container1P.classList.remove('hidden');
+        container2P.classList.add('hidden');
+
+        document.getElementById('gelembung-mode-title').innerText = "5. Pecah Gelembung (1 Pemain)";
+        document.getElementById('gelembung-mode-desc').innerText = "Klik gelembung aksara target sadurunge mumbul ilang ing dhuwur!";
+
+        const canvas = document.getElementById('gelembungCanvas1P');
+        canvas.width = 600; canvas.height = 450;
+
+        gelembungScore = 0; gelembungRound = 1; gelembungLives = 3;
+        bubbles1P = []; gelembungActive1P = true;
+
+        pickNewGelembungTarget1P();
+        updateGelembungHUD1P();
+
+        canvas.onclick = (e) => handleCanvasClick1P(e, canvas);
+
+        gameLoopGelembung1P();
+
+      } else {
+        container1P.classList.add('hidden');
+        container2P.classList.remove('hidden');
+
+        document.getElementById('gelembung-mode-title').innerText = "5. Pecah Gelembung (2 Pemain ⚔️)";
+        document.getElementById('gelembung-mode-desc').innerText = "Lomba mecah gelembung aksara ing layar terbagi split-screen!";
+
+        const c1 = document.getElementById('gelembungCanvasP1');
+        const c2 = document.getElementById('gelembungCanvasP2');
+        c1.width = 340; c1.height = 400;
+        c2.width = 340; c2.height = 400;
+
+        g2pTimer = 45;
+        g2pP1Score = 0; g2pP2Score = 0;
+        bubblesP1 = []; bubblesP2 = [];
+        gelembungActive2P = true;
+
+        pickNewGelembungTarget2P('p1');
+        pickNewGelembungTarget2P('p2');
+        updateGelembungHUD2P();
+
+        c1.onclick = (e) => handleCanvasClick2P('p1', e, c1);
+        c2.onclick = (e) => handleCanvasClick2P('p2', e, c2);
+
+        globalTimerInterval = setInterval(() => {
+          g2pTimer--;
+          document.getElementById('gelembung-2p-timer').innerText = g2pTimer;
+          if (g2pTimer <= 0) {
+            gelembungActive2P = false;
+            stopAllGameTimers();
+            showGelembung2POver();
+          }
+        }, 1000);
+
+        gameLoopGelembung2P();
+      }
+    }
+
+    function pickNewGelembungTarget1P() {
+      gelembungTargetChar = carakanData[Math.floor(Math.random() * carakanData.length)];
+      document.getElementById('gelembung-target-text').innerText = gelembungTargetChar.latin;
+    }
+
+    function updateGelembungHUD1P() {
+      document.getElementById('gelembung-score').innerText = gelembungScore;
+      document.getElementById('gelembung-round').innerText = `${gelembungRound}/10`;
+      document.getElementById('gelembung-lives').innerText = "❤️".repeat(Math.max(0, gelembungLives));
+    }
+
+    function pickNewGelembungTarget2P(player) {
+      const randChar = carakanData[Math.floor(Math.random() * carakanData.length)];
+      if (player === 'p1') {
+        g2pP1Target = randChar;
+        document.getElementById('g2p-p1-target').innerText = randChar.latin;
+      } else {
+        g2pP2Target = randChar;
+        document.getElementById('g2p-p2-target').innerText = randChar.latin;
+      }
+    }
+
+    function updateGelembungHUD2P() {
+      document.getElementById('g2p-p1-score').innerText = g2pP1Score;
+      document.getElementById('g2p-p2-score').innerText = g2pP2Score;
+    }
+
+    function spawnBubble(canvasWidth, canvasHeight, targetObj) {
+      const isTarget = Math.random() < 0.45;
+      const charData = isTarget ? targetObj : carakanData[Math.floor(Math.random() * carakanData.length)];
+      const radius = 32 + Math.random() * 8;
+      
+      const hues = [190, 160, 210, 45, 330];
+      const hue = hues[Math.floor(Math.random() * hues.length)];
+
+      return {
+        x: radius + Math.random() * (canvasWidth - radius * 2),
+        y: canvasHeight + radius + Math.random() * 30,
+        radius: radius,
+        speedY: (1.2 + Math.random() * 1.5) * gelembungSpeedMult,
+        speedX: (Math.random() - 0.5) * 0.8,
+        charData: charData,
+        hue: hue,
+        popped: false
+      };
+    }
+
+    function gameLoopGelembung1P() {
+      if (!gelembungActive1P) return;
+
+      const canvas = document.getElementById('gelembungCanvas1P');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (Math.random() < 0.04 && bubbles1P.length < 7) {
+        bubbles1P.push(spawnBubble(canvas.width, canvas.height, gelembungTargetChar));
+      }
+
+      for (let i = bubbles1P.length - 1; i >= 0; i--) {
+        let b = bubbles1P[i];
+        b.y -= b.speedY;
+        b.x += b.speedX;
+
+        drawBubble(ctx, b);
+
+        if (b.y + b.radius < 0) {
+          bubbles1P.splice(i, 1);
+        }
+      }
+
+      animFrameGelembung1P = requestAnimationFrame(gameLoopGelembung1P);
+    }
+
+    function drawBubble(ctx, b) {
+      ctx.save();
+      
+      // Main Bubble Glass Effect
+      const grad = ctx.createRadialGradient(
+        b.x - b.radius * 0.3, b.y - b.radius * 0.3, b.radius * 0.1,
+        b.x, b.y, b.radius
+      );
+      grad.addColorStop(0, `hsla(${b.hue}, 90%, 85%, 0.95)`);
+      grad.addColorStop(0.7, `hsla(${b.hue}, 80%, 50%, 0.6)`);
+      grad.addColorStop(1, `hsla(${b.hue}, 90%, 35%, 0.8)`);
+
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Highlight sheen
+      ctx.beginPath();
+      ctx.arc(b.x - b.radius * 0.35, b.y - b.radius * 0.35, b.radius * 0.25, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.fill();
+
+      // Aksara Text Inside
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = 'rgba(0,0,0,0.5)';
+      ctx.shadowBlur = 4;
+      ctx.font = `bold ${Math.round(b.radius * 0.95)}px 'Noto Sans Javanese', sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(b.charData.jawa, b.x, b.y + 2);
+
+      ctx.restore();
+    }
+
+    function handleCanvasClick1P(e, canvas) {
+      if (!gelembungActive1P) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) * (canvas.width / rect.width);
+      const clickY = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+      for (let i = bubbles1P.length - 1; i >= 0; i--) {
+        let b = bubbles1P[i];
+        const dist = Math.hypot(clickX - b.x, clickY - b.y);
+
+        if (dist <= b.radius) {
+          bubbles1P.splice(i, 1);
+
+          if (b.charData.latin === gelembungTargetChar.latin) {
+            playSound('correct');
+            gelembungScore += 10;
+            gelembungRound++;
+
+            if (gelembungRound > 10) {
+              gelembungActive1P = false;
+              playSound('correct');
+              alert(`🎉 Slamet! Ronde sampun rampung.\nSkor Akhir Sampeyan: ${gelembungScore}`);
+              showScreen('select-screen');
+              return;
+            } else {
+              pickNewGelembungTarget1P();
+            }
+          } else {
+            playSound('wrong');
+            gelembungLives--;
+            if (gelembungLives <= 0) {
+              gelembungActive1P = false;
+              alert(`❌ Game Over! Nyawa telas.\nSkor Akhir: ${gelembungScore}`);
+              showScreen('select-screen');
+              return;
+            }
+          }
+          updateGelembungHUD1P();
+          break;
+        }
+      }
+    }
+
+    /* 2P GELEMBUNG SPLIT SCREEN LOOP */
+    function gameLoopGelembung2P() {
+      if (!gelembungActive2P) return;
+
+      // Render P1 Canvas
+      const c1 = document.getElementById('gelembungCanvasP1');
+      const ctx1 = c1.getContext('2d');
+      ctx1.clearRect(0, 0, c1.width, c1.height);
+
+      if (Math.random() < 0.045 && bubblesP1.length < 6) {
+        bubblesP1.push(spawnBubble(c1.width, c1.height, g2pP1Target));
+      }
+
+      for (let i = bubblesP1.length - 1; i >= 0; i--) {
+        let b = bubblesP1[i];
+        b.y -= b.speedY; b.x += b.speedX;
+        drawBubble(ctx1, b);
+        if (b.y + b.radius < 0) bubblesP1.splice(i, 1);
+      }
+
+      // Render P2 Canvas
+      const c2 = document.getElementById('gelembungCanvasP2');
+      const ctx2 = c2.getContext('2d');
+      ctx2.clearRect(0, 0, c2.width, c2.height);
+
+      if (Math.random() < 0.045 && bubblesP2.length < 6) {
+        bubblesP2.push(spawnBubble(c2.width, c2.height, g2pP2Target));
+      }
+
+      for (let i = bubblesP2.length - 1; i >= 0; i--) {
+        let b = bubblesP2[i];
+        b.y -= b.speedY; b.x += b.speedX;
+        drawBubble(ctx2, b);
+        if (b.y + b.radius < 0) bubblesP2.splice(i, 1);
+      }
+
+      animFrameGelembung2P = requestAnimationFrame(gameLoopGelembung2P);
+    }
+
+    function handleCanvasClick2P(player, e, canvas) {
+      if (!gelembungActive2P) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const clickX = (e.clientX - rect.left) * (canvas.width / rect.width);
+      const clickY = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+      const bubblesArr = (player === 'p1') ? bubblesP1 : bubblesP2;
+      const targetChar = (player === 'p1') ? g2pP1Target : g2pP2Target;
+
+      for (let i = bubblesArr.length - 1; i >= 0; i--) {
+        let b = bubblesArr[i];
+        const dist = Math.hypot(clickX - b.x, clickY - b.y);
+
+        if (dist <= b.radius) {
+          bubblesArr.splice(i, 1);
+
+          if (b.charData.latin === targetChar.latin) {
+            playSound('correct');
+            if (player === 'p1') {
+              g2pP1Score += 10;
+              pickNewGelembungTarget2P('p1');
+            } else {
+              g2pP2Score += 10;
+              pickNewGelembungTarget2P('p2');
+            }
+          } else {
+            playSound('wrong');
+            if (player === 'p1') g2pP1Score = Math.max(0, g2pP1Score - 5);
+            else g2pP2Score = Math.max(0, g2pP2Score - 5);
+          }
+          updateGelembungHUD2P();
+          break;
+        }
+      }
+    }
+
+    function showGelembung2POver() {
+      let winMsg = "";
+      if (g2pP1Score > g2pP2Score) winMsg = "🏆 PEMAIN 1 MENANG!";
+      else if (g2pP2Score > g2pP1Score) winMsg = "🏆 PEMAIN 2 MENANG!";
+      else winMsg = "🤝 SKOR SERI / IMBANG!";
+
+      alert(`${winMsg}\n\nHasil Pertandingan Pecah Gelembung:\nPemain 1: ${g2pP1Score}\nPemain 2: ${g2pP2Score}`);
+      showScreen('select-screen');
+    }
+  </script>
+</body>
+</html>
